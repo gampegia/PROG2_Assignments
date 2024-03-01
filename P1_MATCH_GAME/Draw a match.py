@@ -1,6 +1,31 @@
+"""
+Prog 2
+W01
+P01 1.1 “Draw a match” game
+Authors: Simone Fabio (Fabiosi1), Gwendoline Vocat (Vocatgwe),
+Gian Gamper (Gampegia), Jonas Bratschi (bratsjon)
+
+Arbeitsaufteilung:
+- Algorithmus und Berechnung: Gamper und Fabio
+- Menu und Bedienung Programm: Vocat und Bratschi
+
+
+Date: 29.11.2023
+"""
+
+
 import random
 
 def get_bot_choice(stack_size: int):
+    """
+    Determines the computer's choice of matches to draw based on the current stack size.
+
+    Parameters:
+    - stack_size (int): The current number of matches in the stack.
+
+    Returns:
+    - int: The number of matches the computer chooses to draw.
+    """
     diff_target = (stack_size - 1) % 4
     if diff_target == 0:
         result = 1
@@ -9,6 +34,12 @@ def get_bot_choice(stack_size: int):
     return result
 
 def who_starts():
+    """
+    Randomly determines whether the user or the computer makes the first move in the game.
+
+    Returns:
+    - tuple: A tuple containing an integer (0 for user, 1 for computer) and a string indicating the starter.
+    """
     starter = random.randint(0, 1)
     if starter == 0:
         result = (starter, "\nYou start")
