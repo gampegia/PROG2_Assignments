@@ -4,7 +4,7 @@ W01
 P01 1.1 “Draw a match” game
 
 Authors:
-Simone Fabio (Fabiosi1), Gwendoline Vocat (Vocatgwe),
+Simone Gwendoline Vocat (Vocatgwe),
 Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
 
 Arbeitsaufteilung:
