@@ -2,8 +2,10 @@
 Prog 2
 W01
 P01 1.1 “Draw a match” game
-Authors: Simone Fabio (Fabiosi1), Gwendoline Vocat (Vocatgwe),
-Gian Gamper (Gampegia), Jonas Bratschi (bratsjon)
+
+Authors:
+Simone Fabio (Fabiosi1), Gwendoline Vocat (Vocatgwe),
+Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
 
 Arbeitsaufteilung:
 - Algorithmus und Berechnung: Gamper und Fabio
@@ -43,7 +45,7 @@ def who_starts():
     starter = random.randint(0, 1)
     if starter == 0:
         result = (starter, "\nYou start")
-    elif starter == 1:
+    else:
         result = (starter, "\nThe computer makes the first move")
     return result
 
