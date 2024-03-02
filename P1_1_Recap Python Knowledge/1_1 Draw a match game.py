@@ -4,11 +4,10 @@ W01
 P01 1.1 “Draw a match” game
 
 Authors:
-Simone Gwendoline Vocat (Vocatgwe),
-Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
+Gwendoline Vocat (Vocatgwe), Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
 
 Arbeitsaufteilung:
-- Algorithmus und Berechnung: Gamper und Fabio
+- Algorithmus und Berechnung: Gamper
 - Menu und Bedienung Programm: Vocat und Bratschi
 
 
