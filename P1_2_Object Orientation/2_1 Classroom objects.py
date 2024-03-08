@@ -6,7 +6,7 @@ P01 2.1 Classroom objects
 Authors:
 Gwendoline Vocat (Vocatgwe), Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
 
-Date: 02.03.2024
+Date: 08.03.2024
 """
 
 class Classroom:
