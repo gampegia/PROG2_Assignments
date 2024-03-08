@@ -1,3 +1,13 @@
+"""
+Prog 2
+W01
+P01 2.2 Person
+
+Authors:
+Gwendoline Vocat (Vocatgwe), Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
+
+Date: 08.03.2024
+"""
 class Person:
     def __init__(self, hair_color, age): 
         self.hair_color = hair_color
