@@ -46,8 +46,10 @@ class SavingsAccount(BankAccount):
 # Main block to create an instance of BankAccount and test its methods
 if __name__ == "__main__":
     # Below code is commented out and intended for testing purposes.
+"""    
     sa = SavingsAccount("Jonas")
     sa.deposit(5000)
     print(sa.check_balance())
     sa.withdraw(7800)
     print(sa.check_balance())
+"""

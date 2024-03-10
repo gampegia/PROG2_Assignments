@@ -11,6 +11,7 @@ Date: 10.03.2024
 
 from BankAccount import BankAccount
 from datetime import datetime
+import re
 
 class SavingsAccount(BankAccount):
     # Constants
@@ -45,27 +46,37 @@ class SavingsAccount(BankAccount):
         return result
 
     def is_younger_than_25(self):
-        # Convert input string to datetime object
-        birthdate = datetime.strptime(self.date_of_birth, self.DATE_FORMAT)
+        try:
+            # Convert input string to datetime object
+            birthdate = datetime.strptime(self.date_of_birth, self.DATE_FORMAT)
 
-        # Get the current date
-        current_date = datetime.now()
+            # Get the current date
+            current_date = datetime.now()
 
-        # Calculate the age
-        age = (current_date.year - birthdate.year -
-               ((current_date.month, current_date.day) < (birthdate.month, birthdate.day)))
+            # Calculate the age
+            age = (current_date.year - birthdate.year -
+                   ((current_date.month, current_date.day) < (birthdate.month, birthdate.day)))
 
-        # Check if the age is less than or equal to 25
-        if age <= 25:
-            return True
-        else:
-            print("Too old to create a Youth Account")
+            # Check if the age is less than or equal to 25
+            if age <= 25:
+                result = True
+            else:
+                print("Too old to create a Youth Account")
+                result = False
+        except ValueError:
+            print(f"Your birthdate dont matches the format '%d-%m-%Y'")
+            result = False
+        return result
 
 
-sa = SavingsAccount("Jonas", "25-01-2005")
-sa.deposit(5000)
-print(sa.check_balance())
-sa.withdraw(6000)
-print(sa.check_balance())
-
+# Main block to create an instance of BankAccount and test its methods
+if __name__ == "__main__":
+# Below code is commented out and intended for testing purposes.
+"""    
+    sa = SavingsAccount("Jonas", "22-01-1990")
+    sa.deposit(5000)
+    print(sa.check_balance())
+    sa.withdraw(6000)
+    print(sa.check_balance())
+"""
 
