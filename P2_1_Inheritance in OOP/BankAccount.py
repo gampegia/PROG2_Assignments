@@ -46,9 +46,9 @@ class BankAccount:
             self.account_number = BankAccount.generate_iban_numb(12)  # Generates a 12-digit account number
             self.iban = self.generate_iban()  # Generates a unique IBAN for the account
             self.owner = owner  # Account owner name
-            self.__balance = balance  # Account balance, private attribute
+            self.balance = balance  # Account balance, private attribute
             self.currency = currency  # Currency of the account
-            self.negative_balance_allowed = negative_balance_allowed
+            self.__negative_balance_allowed = negative_balance_allowed
             print("Bank account Created")
         else:
             print(f"{currency} is not an accepted or valid currency. Therefore, your account will get terminated")
@@ -112,7 +112,7 @@ class BankAccount:
         Returns:
             str: The account balance in currency format.
         """
-        main_amount, sub_amount = divmod(self.__balance, 1)
+        main_amount, sub_amount = divmod(self.balance, 1)
         sub_amount = round(sub_amount, 2)
         ret_main = f"{main_amount} {BankAccount.currency_dict[self.currency][0]}"
         ret_sub = f"{sub_amount} {BankAccount.currency_dict[self.currency][1]}"
@@ -129,16 +129,16 @@ class BankAccount:
             int: 1 if the transaction is successful, 0 otherwise.
         """
         if BankAccount.is_float(amount) and float(amount) >= 0:
-            if not self.negative_balance_allowed:
-                if self.__balance < float(amount):
+            if not self.__negative_balance_allowed:
+                if self.balance < float(amount):
                     print("Insufficient balance")
                     return 0
                 else:
-                    self.__balance -= float(amount)
+                    self.balance -= float(amount)
                     print("Transaction successfully")
                     return 1
             else:
-                self.__balance -= float(amount)
+                self.balance -= float(amount)
                 print("Transaction successfully")
                 return 1
 
@@ -156,8 +156,8 @@ class BankAccount:
         Returns:
             int: 1 if the transaction is successful, 0 otherwise.
         """
-        if BankAccount.is_float(amount) and float(amount) >= 0 and self.__balance + float(amount) <= 100000:
-            self.__balance += float(amount)
+        if BankAccount.is_float(amount) and float(amount) >= 0 and self.balance + float(amount) <= 100000:
+            self.balance += float(amount)
             print("Transaction successfully")
             return 1
         else:
