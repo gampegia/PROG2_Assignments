@@ -20,11 +20,12 @@ class SavingsAccount(BankAccount):
     MONTHLY_WITHDRAWAL_LIMIT = 2000
     WITHDREW_THIS_MONTH = 0
 
-    def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=0.001):
+    def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=0.02):
         super().__init__(owner, balance=balance)
         self.date_of_birth = date_of_birth
         self.monthly_interest_rate = monthly_interest_rate
         self.balance = balance
+        self.withdrew_this_month = self.WITHDREW_THIS_MONTH
         if not self.is_younger_than_25():
             raise ValueError("Youth Account could not be created due to your age")
 
@@ -38,9 +39,6 @@ class SavingsAccount(BankAccount):
                         result = 1
                     else:
                         self.balance = 0
-
-
-
         else:
             result = 0
         return result
@@ -72,11 +70,12 @@ class SavingsAccount(BankAccount):
 # Main block to create an instance of BankAccount and test its methods
 if __name__ == "__main__":
 # Below code is commented out and intended for testing purposes.
-
+"""
     sa = SavingsAccount("Jonas", "22-01-1990")
     sa.deposit(5000)
     print(sa.check_balance())
     sa.withdraw(6000)
     print(sa.check_balance())
+"""
 
 
