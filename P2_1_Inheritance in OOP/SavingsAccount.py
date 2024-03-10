@@ -169,8 +169,8 @@ class BankAccount:
 # Main block to create an instance of BankAccount and test its methods
 if __name__ == "__main__":
     # Below code is commented out and intended for testing purposes.
-    """
-    acc1 = BankAccount("Gian Gamper", "USD")
+
+    acc1 = BankAccount("Gian Gamper", "USD", )
     print(acc1.iban)
     print(acc1.owner)
     print(acc1.currency)
@@ -180,4 +180,4 @@ if __name__ == "__main__":
     acc1.deposit(100000.2)
     acc1.withdraw(1.1)
     print(acc1.check_balance())
-    """
+

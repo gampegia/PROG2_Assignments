@@ -31,7 +31,7 @@ class BankAccount:
         "USD": ["$", "¢"]
     }
 
-    def __init__(self, owner, currency="CHF", balance=0.0):
+    def __init__(self, owner, currency="CHF", balance=0.0, negative_balance_allowed=False):
         """
         Initializes a BankAccount instance.
 
@@ -48,6 +48,7 @@ class BankAccount:
             self.owner = owner  # Account owner name
             self.__balance = balance  # Account balance, private attribute
             self.currency = currency  # Currency of the account
+            self.negative_balance_allowed = negative_balance_allowed
             print("Bank account Created")
         else:
             print(f"{currency} is not an accepted or valid currency. Therefore, your account will get terminated")
@@ -128,13 +129,19 @@ class BankAccount:
             int: 1 if the transaction is successful, 0 otherwise.
         """
         if BankAccount.is_float(amount) and float(amount) >= 0:
-            if self.__balance < float(amount):
-                print("Insufficient balance")
-                return 0
+            if not self.negative_balance_allowed:
+                if self.__balance < float(amount):
+                    print("Insufficient balance")
+                    return 0
+                else:
+                    self.__balance -= float(amount)
+                    print("Transaction successfully")
+                    return 1
             else:
                 self.__balance -= float(amount)
                 print("Transaction successfully")
                 return 1
+
         else:
             print("Invalid Input only positive Numbers are allowed")
             return 0
@@ -169,15 +176,19 @@ class BankAccount:
 # Main block to create an instance of BankAccount and test its methods
 if __name__ == "__main__":
     # Below code is commented out and intended for testing purposes.
-    """
-    acc1 = BankAccount("Gian Gamper", "USD")
-    print(acc1.iban)
+
+    acc1 = BankAccount("Gian Gamper", "USD", negative_balance_allowed=True)
+""" print(acc1.iban)
     print(acc1.owner)
     print(acc1.currency)
     print(acc1.check_balance())
-
+    acc1.deposit(100)
+    print(acc1.check_balance())
+    acc1.withdraw(200)
+    print(acc1.check_balance())
+    
     acc1.withdraw(-20000)
     acc1.deposit(100000.2)
     acc1.withdraw(1.1)
-    print(acc1.check_balance())
-    """
+    print(acc1.check_balance())"""
+
