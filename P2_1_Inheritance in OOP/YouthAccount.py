@@ -8,19 +8,20 @@ Gwendoline Vocat (Vocatgwe), Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
 
 Date: 10.03.2024
 """
-
+import time
 from BankAccount import BankAccount
 from datetime import datetime
 import re
 
-class SavingsAccount(BankAccount):
+class YouthAccount(BankAccount):
     # Constants
     NEGATIVE_BALANCE_ALLOWED = False
     DATE_FORMAT = "%d-%m-%Y"
     MONTHLY_WITHDRAWAL_LIMIT = 2000
     WITHDREW_THIS_MONTH = 0
+    DEFAULT_INTEREST_RATE_MONTH = 0.02
 
-    def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=0.02):
+    def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH):
         super().__init__(owner, balance=balance)
         self.date_of_birth = date_of_birth
         self.monthly_interest_rate = monthly_interest_rate
@@ -30,19 +31,31 @@ class SavingsAccount(BankAccount):
             raise ValueError("Youth Account could not be created due to your age")
 
     def withdraw(self, amount):
-        result = 0
+        if self.check_interest_cycle():
+            self.process_month_end()
         if BankAccount.is_float(amount) and float(amount) >= 0:
             if self.WITHDREW_THIS_MONTH < self.MONTHLY_WITHDRAWAL_LIMIT:
-                if not SavingsAccount.NEGATIVE_BALANCE_ALLOWED:
-                    if self.balance >= float(amount):
-                        self.balance -= float(amount)
-                        result = 1
+                if not YouthAccount.NEGATIVE_BALANCE_ALLOWED:
+                    if self.MONTHLY_WITHDRAWAL_LIMIT - self.withdrew_this_month < float(amount):
+                        if self.balance >= self.MONTHLY_WITHDRAWAL_LIMIT - self.withdrew_this_month:
+                            self.balance -= self.MONTHLY_WITHDRAWAL_LIMIT - self.withdrew_this_month
+                            self.withdrew_this_month = 2000
+                            BankAccount.status_notice("Transaction successfully")
+                        else:
+                            self.balance = 0
+                            self.withdrew_this_month += float(amount)
+                            BankAccount.status_notice("Transaction successfully")
                     else:
-                        self.balance = 0
-        else:
-            result = 0
-        return result
+                        if self.balance >= float(amount):
+                            self.balance -= float(amount)
+                            self.withdrew_this_month += float(amount)
+                            BankAccount.status_notice("Transaction successfully")
+                        else:
+                            self.balance = 0
+                            self.withdrew_this_month += float(amount)
 
+        else:
+            BankAccount.status_notice("Transaction Failed")
     def is_younger_than_25(self):
         try:
             # Convert input string to datetime object
@@ -59,23 +72,36 @@ class SavingsAccount(BankAccount):
             if age <= 25:
                 result = True
             else:
-                print("Too old to create a Youth Account")
+                BankAccount.status_notice("Too old to create a Youth Account")
                 result = False
         except ValueError:
-            print(f"Your birthdate dont matches the format '%d-%m-%Y'")
+            BankAccount.status_notice(f"Your birthdate dont matches the format '%d-%m-%Y'")
             result = False
         return result
 
 
 # Main block to create an instance of BankAccount and test its methods
 if __name__ == "__main__":
+
 # Below code is commented out and intended for testing purposes.
-"""
-    sa = SavingsAccount("Jonas", "22-01-1990")
-    sa.deposit(5000)
+
+    sa = YouthAccount("Jonas", "22-01-1999")
+    #YouthAccount.DEFAULT_INTEREST_RATE_MONTH = 1
+    sa.monthly_interest_rate = 0.2
+    print(YouthAccount.DEFAULT_INTEREST_RATE_MONTH)
+    sa.deposit(1000)
+    print(sa.check_balance())
+    sa.withdraw(1000)
+    print(sa.check_balance())
+    sa.deposit(1100)
+    print(sa.check_balance())
+    sa.withdraw(1050)
+    print(sa.check_balance())
+    print(sa.withdrew_this_month)
+    time.sleep(10)
     print(sa.check_balance())
     sa.withdraw(6000)
     print(sa.check_balance())
-"""
+
 
 
