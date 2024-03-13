@@ -12,8 +12,10 @@ Date: 11.03.2024
 from BankAccount import BankAccount
 from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
-from SavingsAccount import SavingsAccount
+import time
 
+
+# The BankApplication class is the main
 class BankApplication:
     def __init__(self):
         self.accounts = []
@@ -21,14 +23,28 @@ class BankApplication:
 
     def open_account(self, account_type):
         owner = input("Enter the owner's name: ")
+        account_type = account_type.strip().lower()
+        
         if account_type == "savings":
             account = SavingsAccount(owner)
+
+        elif account_type == "youth":
+            
+            try:
+                date_of_birth = input("Enter the date of birth (dd-mm-yyyy): ")
+                account.date_of_birth = time.strptime(date_of_birth, "%d-%m-%Y")
+                account = YouthAccount(owner, date_of_birth)
+            except ValueError:
+                print("Invalid date of birth")
+                return
+
         else:
             print("Invalid account type")
             return
-        
+    
         self.accounts.append(account)
         print(f"{account_type.capitalize()} account opened successfully")
+        print("Account number: ", account.account_number)
 
     def close_account(self, account_number):
         for account in self.accounts:
