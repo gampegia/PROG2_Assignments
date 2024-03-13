@@ -12,6 +12,7 @@ Date: 11.03.2024
 from BankAccount import BankAccount
 from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
+from SavingsAccount import SavingsAccount
 
 class BankApplication:
     def __init__(self):
@@ -19,14 +20,13 @@ class BankApplication:
         self.current_account = None
 
     def open_account(self, account_type):
+        owner = input("Enter the owner's name: ")
         if account_type == "savings":
-            account = SavingsAccount()
-        elif account_type == "youth":
-            account = YouthAccount()
+            account = SavingsAccount(owner)
         else:
             print("Invalid account type")
             return
-
+        
         self.accounts.append(account)
         print(f"{account_type.capitalize()} account opened successfully")
 
