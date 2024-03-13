@@ -1,0 +1,40 @@
+from BankAccount import BankAccount
+from SavingsAccount import SavingsAccount
+from YouthAccount import YouthAccount
+import time
+
+
+if __name__ == "__main__":
+    You1 = YouthAccount("Young Gregi", "22-01-1999")
+    Sav1 = SavingsAccount("Saving Nancy Pelosi")
+    You1.deposit(2000)
+    Sav1.deposit(2000)
+    print("Deposit 2k")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
+    You1.withdraw(3000)
+    Sav1.withdraw(3000)
+    print("Withdraw 3k")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
+    You1.deposit(2000)
+    Sav1.deposit(2000)
+    print("Deposit 2k")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
+    time.sleep(10)
+    print("One Month passed by")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
+    time.sleep(10)
+    print("One Month passed by")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
+    time.sleep(10)
+    print("One Month passed by")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
+    time.sleep(15)
+    print("1.5 Month passed by")
+    print(You1.owner, You1.check_balance())
+    print(Sav1.owner, Sav1.check_balance())
