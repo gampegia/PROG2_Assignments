@@ -123,7 +123,9 @@ class BankApplication:
                     print(f"Account {account_number} not found")
 
             elif choice == "8":
-                print(f"Total balance of all savings accounts: {}")
+                print(f"Total balance of all savings accounts: {bala} ")
+
+            
 
             elif choice == "9":
                 print("Exiting...")
