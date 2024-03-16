@@ -6,14 +6,11 @@ P02 1.2 Bank application
 Authors:
 Gwendoline Vocat (Vocatgwe), Gian Gamper (Gampegia), Jonas Bratschi (Bratsjon)
 
-Date: 11.03.2024
+Date: 16.03.2024
 """
 
-from BankAccount import BankAccount
 from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
-import datetime 
-import time
 
 
 # The BankApplication class is the main
@@ -65,7 +62,7 @@ class BankApplication:
     def check_balance(self, account_number):
         for account in self.accounts:
             if str(account.account_number) == str(account_number):
-                print(f"Account {account_number} has a balance of {account.balance} {account.currency}")
+                print(f"Account has a balance of {account.balance} {account.currency}")
                 return
 
             print(f"Account {account_number} not found")
@@ -74,15 +71,13 @@ class BankApplication:
 
     # Method to display the menu
     def display_menu(self):
-        print("1. Open account")
-        print("2. Close account")
-        print("3. Check balance")
-        print("4. deposit")
-        print ("5. withdraw")
-        print("6. ")
-        print("7.")
-        print("8. Taxreport")
-        print("9. Exit")
+        print("1: Open account")
+        print("2: Close account")
+        print("3: Check balance")
+        print("4: Deposit")
+        print("5: Withdraw")
+        print("8: Tax report")
+        print("9: Exit")
        
  
     # Method to run the application
@@ -92,7 +87,14 @@ class BankApplication:
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                account_type = input("Enter account type (savings/youth): ")
+                user_input = input("1: Youth account \n2: Savings Account \nEnter account type: ")
+                account_type = ""
+                if user_input == "1":
+                    account_type = "youth"
+                elif user_input == "2":
+                    account_type = "savings"
+                else:
+                    raise ValueError("Invalid Input")
                 self.open_account(account_type)
             elif choice == "2":
                 account_number = input("Enter account number: ")
@@ -123,31 +125,33 @@ class BankApplication:
                     print(f"Account {account_number} not found")
 
             elif choice == "8":
-                print(f"Total balance of all savings accounts: {bala} ")
-
-            
+                print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_youth()} ")
+                print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_savings()}")
 
             elif choice == "9":
-                print("Exiting...")
+                print("Program terminated")
                 break
             else:
                 print("Invalid choice")
 
-"""
+
 class TaxReport:
-        def __init__(self, account):
-            self.accounts = account
-            
+        def __init__(self, accounts):
+            self.accounts = accounts
 
         def total_balance_savings(self):
             balance_savings = 0
             for account in self.accounts:
                 if account.type == "savings":
-                    self.balance_savings += account.balance
+                    balance_savings += account.balance
+            return balance_savings
 
-                    
-            return self.balance_savings
-            """
+        def total_balance_youth(self):
+            balance_youth = 0
+            for account in self.accounts:
+                if account.type == "youth":
+                    balance_youth += account.balance
+            return balance_youth
 
 
 # Instantiate the BankApplication class and run the application
