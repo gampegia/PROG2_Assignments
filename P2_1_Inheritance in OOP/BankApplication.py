@@ -22,6 +22,7 @@ class BankApplication:
         self.accounts = []
         self.current_account = None
         self.closed_accounts = []
+
     # Method to open a new account
     def open_account(self, account_type):
         owner = input("Enter the owner's name: ")
@@ -68,14 +69,20 @@ class BankApplication:
                 return
 
             print(f"Account {account_number} not found")
-
+        
+    
 
     # Method to display the menu
     def display_menu(self):
         print("1. Open account")
         print("2. Close account")
         print("3. Check balance")
-        print("4. Exit")
+        print("4. deposit")
+        print ("5. withdraw")
+        print("6. ")
+        print("7.")
+        print("8. Taxreport")
+        print("9. Exit")
        
  
     # Method to run the application
@@ -96,10 +103,50 @@ class BankApplication:
                 self.check_balance(account_number)
 
             elif choice == "4":
+                account_number = input("Enter account number: ")
+                amount = input("Enter the amount to deposit: ")
+                for account in self.accounts:
+                    if (account.account_number) == (account_number):
+                        account.deposit(amount)
+                        break
+                else:
+                    print(f"Account {account_number} not found")
+
+            elif choice == "5":
+                account_number = input("Enter account number: ")
+                amount = input("Enter the amount to withdraw: ")
+                for account in self.accounts:
+                    if (account.account_number) == (account_number):
+                        account.withdraw(amount)
+                        break
+                else:
+                    print(f"Account {account_number} not found")
+
+            elif choice == "8":
+                print(f"Total balance of all savings accounts: {}")
+
+            elif choice == "9":
                 print("Exiting...")
                 break
             else:
                 print("Invalid choice")
+
+"""
+class TaxReport:
+        def __init__(self, account):
+            self.accounts = account
+            
+
+        def total_balance_savings(self):
+            balance_savings = 0
+            for account in self.accounts:
+                if account.type == "savings":
+                    self.balance_savings += account.balance
+
+                    
+            return self.balance_savings
+            """
+
 
 # Instantiate the BankApplication class and run the application
 if __name__ == "__main__":
