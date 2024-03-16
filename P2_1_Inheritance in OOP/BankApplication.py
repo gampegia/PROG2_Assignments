@@ -25,7 +25,7 @@ class BankApplication:
     # Method to open a new account
     def open_account(self, account_type):
         owner = input("Enter the owner's name: ")
-        account_type = account_type.strip().lower()
+        account_type = account_type.lower()
 
         # Create an instance of the appropriate account type
         if account_type == "savings":
