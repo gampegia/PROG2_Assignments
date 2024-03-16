@@ -21,7 +21,7 @@ class BankApplication:
     def __init__(self):
         self.accounts = []
         self.current_account = None
-
+        self.closed_accounts = []
     # Method to open a new account
     def open_account(self, account_type):
         owner = input("Enter the owner's name: ")
@@ -54,6 +54,7 @@ class BankApplication:
     def close_account(self, account_number):
         for account in self.accounts:
             if account.account_number == account_number:
+                self.closed_accounts.append(account)
                 self.accounts.remove(account)
                 print(f"Account {account_number} closed successfully")
                 return
