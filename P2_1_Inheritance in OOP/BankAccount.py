@@ -151,6 +151,11 @@ class BankAccount:
         ret_sub = f"{sub_amount} {BankAccount.currency_dict[self.currency][1]}"
         return f"{ret_main} {ret_sub}"
 
+    def get_amount(self):
+        if self.check_interest_cycle():
+            self.process_month_end()
+        return self.balance
+
     def withdraw(self, amount):
         """
         Withdraws a specified amount from the account if it is a valid float and if sufficient balance exists.

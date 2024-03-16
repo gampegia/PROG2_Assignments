@@ -28,6 +28,7 @@ class YouthAccount(BankAccount):
         self.monthly_interest_rate = monthly_interest_rate
         self.balance = balance
         self.withdrew_this_month = self.WITHDREW_THIS_MONTH
+        self.type = "youth"
         if not self.is_younger_than_25():
             raise ValueError("Youth Account could not be created due to your age")
 

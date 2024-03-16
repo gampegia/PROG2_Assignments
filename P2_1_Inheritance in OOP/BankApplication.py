@@ -16,6 +16,7 @@ from YouthAccount import YouthAccount
 # The BankApplication class is the main
 class BankApplication:
     def __init__(self):
+
         self.accounts = []
         self.current_account = None
         self.closed_accounts = []
@@ -125,8 +126,8 @@ class BankApplication:
                     print(f"Account {account_number} not found")
 
             elif choice == "8":
-                print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_youth()} ")
-                print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_savings()}")
+                print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_youth()} ")
+                print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_savings()}")
 
             elif choice == "9":
                 print("Program terminated")
@@ -143,14 +144,14 @@ class TaxReport:
             balance_savings = 0
             for account in self.accounts:
                 if account.type == "savings":
-                    balance_savings += account.balance
+                    balance_savings += account.get_amount()
             return balance_savings
 
         def total_balance_youth(self):
             balance_youth = 0
             for account in self.accounts:
                 if account.type == "youth":
-                    balance_youth += account.balance
+                    balance_youth += account.get_amount()
             return balance_youth
 
 

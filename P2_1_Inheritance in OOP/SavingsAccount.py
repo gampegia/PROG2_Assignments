@@ -26,6 +26,7 @@ class SavingsAccount(BankAccount):
         super().__init__(owner, balance=balance)
         self.monthly_interest_rate = monthly_interest_rate
         self.balance = balance
+        self.type = "savings"
 
     # Method to check the balance of an account
     def withdraw(self, amount):
