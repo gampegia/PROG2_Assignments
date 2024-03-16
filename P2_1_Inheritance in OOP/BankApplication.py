@@ -11,6 +11,7 @@ Date: 16.03.2024
 
 from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
+import datetime
 
 
 # The BankApplication class is the main
@@ -126,6 +127,8 @@ class BankApplication:
                     print(f"Account {account_number} not found")
 
             elif choice == "8":
+                current_year = datetime.datetime.now().year
+                print(f"Tax report {current_year} for {current_year-1}")
                 print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_youth()} ")
                 print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_savings()}")
 
