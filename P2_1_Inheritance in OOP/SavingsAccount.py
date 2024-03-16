@@ -20,17 +20,14 @@ class SavingsAccount(BankAccount):
     NEGATIVE_BALANCE_ALLOWED = True
     DEFAULT_INTEREST_RATE_MONTH = 0.001
 
+
     def __init__(self, owner, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH):
 
         super().__init__(owner, balance=balance)
         self.monthly_interest_rate = monthly_interest_rate
         self.balance = balance
 
-
-
-
-
-
+    # Method to check the balance of an account
     def withdraw(self, amount):
         if self.check_interest_cycle():
             self.process_month_end()

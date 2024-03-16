@@ -30,7 +30,6 @@ class BankApplication:
         # Create an instance of the appropriate account type
         if account_type == "savings":
             account = SavingsAccount(owner)
-
         elif account_type == "youth":
             # Ask for the date of birth and create a YouthAccount instance
             try:
@@ -41,7 +40,6 @@ class BankApplication:
             except ValueError:
                 print("Invalid date of birth")
                 return
-
         else:
             print("Invalid account type")
             return
@@ -51,15 +49,16 @@ class BankApplication:
         print(f"{account_type.capitalize()} account opened successfully")
         print("Account number: ", account.account_number)
 
+    # Method to close an account
     def close_account(self, account_number):
         for account in self.accounts:
             if account.account_number == account_number:
                 self.accounts.remove(account)
                 print(f"Account {account_number} closed successfully")
                 return
-
         print(f"Account {account_number} not found")
 
+    # Method to check the balance of an account
     def check_balance(self, account_number):
         for account in self.accounts:
             if str(account.account_number) == str(account_number):
@@ -69,22 +68,13 @@ class BankApplication:
             print(f"Account {account_number} not found")
 
 
-
-    def query_account_information(self, account_number):
-        for account in self.accounts:
-            if account.account_number == account_number:
-                account.query_information()
-                return
-
-        print(f"Account {account_number} not found")
-        
     # Method to display the menu
     def display_menu(self):
         print("1. Open account")
         print("2. Close account")
         print("3. Check balance")
-        print("4. Query account information")
-        print("5. Exit")
+        print("4. Exit")
+       
  
     # Method to run the application
     def run(self):
@@ -104,13 +94,6 @@ class BankApplication:
                 self.check_balance(account_number)
 
             elif choice == "4":
-                if self.current_account is None:
-                    print("No account selected")
-                    account_number = int(input("Enter account number: "))
-                    self.select_account(account_number) 
-                else:
-                    self.current_account.query_information()
-            elif choice == "5":
                 print("Exiting...")
                 break
             else:

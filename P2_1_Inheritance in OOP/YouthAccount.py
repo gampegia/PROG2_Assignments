@@ -21,6 +21,7 @@ class YouthAccount(BankAccount):
     WITHDREW_THIS_MONTH = 0
     DEFAULT_INTEREST_RATE_MONTH = 0.02
 
+    # Class variable holding the list of all generated IBANs
     def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH):
         super().__init__(owner, balance=balance)
         self.date_of_birth = date_of_birth
@@ -30,6 +31,7 @@ class YouthAccount(BankAccount):
         if not self.is_younger_than_25():
             raise ValueError("Youth Account could not be created due to your age")
 
+    # Method to check the balance of an account
     def withdraw(self, amount):
         if self.check_interest_cycle():
             self.process_month_end()
@@ -53,9 +55,10 @@ class YouthAccount(BankAccount):
                         else:
                             self.balance = 0
                             self.withdrew_this_month += float(amount)
-
         else:
             BankAccount.status_notice("Transaction Failed")
+
+    # Method to check the owner's age
     def is_younger_than_25(self):
         try:
             # Convert input string to datetime object

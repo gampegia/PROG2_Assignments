@@ -3,7 +3,7 @@ from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
 import time
 
-
+# The BankApplication class is the main test class
 if __name__ == "__main__":
     You1 = YouthAccount("Young Gregi", "22-01-1999")
     Sav1 = SavingsAccount("Saving Nancy Pelosi")
