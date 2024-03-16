@@ -58,16 +58,16 @@ class BankApplication:
                 self.accounts.remove(account)
                 print(f"Account {account_number} closed successfully")
                 return
-
-        print(f"Account {account_number} not found")
+            else:
+                print(f"Account {account_number} not found")
 
     def check_balance(self, account_number):
         for account in self.accounts:
             if str(account.account_number) == str(account_number):
                 print(f"Account has a balance of {account.balance} {account.currency}")
                 return
-
-            print(f"Account {account_number} not found")
+            else:
+                print(f"Account {account_number} not found")
         
     
 
