@@ -11,6 +11,7 @@ Date: 16.03.2024
 
 from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
+from TaxReport import TaxReport
 import datetime
 
 
@@ -129,8 +130,8 @@ class BankApplication:
             elif choice == "8":
                 current_year = datetime.datetime.now().year
                 print(f"Tax report {current_year} for fiscal year {current_year-1}")
-                print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_youth()} ")
-                print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_savings()}")
+                print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_youth()} Fr.")
+                print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_savings()} Fr.")
 
             elif choice == "9":
                 print("Program terminated")
