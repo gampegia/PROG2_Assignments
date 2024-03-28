@@ -136,7 +136,7 @@ class BOMService:
         print("=".ljust(item_width + price_width + 3, "="))  # Printing the header separator
         for item, price in data.items():  # Iterating through the items and prices
             print(f"|{str(item).ljust(item_width)}|{str(price).ljust(price_width)}|")  # Printing each item and price
-        print("|" + "-".ljust(item_width, "-") + "|" + "-".ljust(price_width, "-") + "|")  # Printing the separator line
+        print("|" + "-".ljust(item_width, "-") + "+" + "-".ljust(price_width, "-") + "|")  # Printing the separator line
         print(f"|{str('Total Price').ljust(item_width)}|{str(total_price).ljust(price_width)}|")  # Printing the total price
         print("=".ljust(item_width + price_width + 3, "="))  # Printing the footer separator
 
