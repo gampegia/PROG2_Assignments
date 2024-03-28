@@ -48,6 +48,10 @@ class TaxReport:
 
 
 if __name__ == "__main__":
+
+    # Assuming you have a list of account instances
+    accounts = [account1, account2, account3]
+    tax_report = TaxReport(accounts)
     tax_report = TaxReport()
     tax_report.total_balance_youth(300)
     tax_report.total_balance_savings(500)
