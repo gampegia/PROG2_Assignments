@@ -12,6 +12,7 @@ Date: 16.03.2024
 from SavingsAccount import SavingsAccount
 from YouthAccount import YouthAccount
 from TaxReport import TaxReport
+from BankAccount import BankAccount
 import datetime
 
 
@@ -47,17 +48,23 @@ class BankApplication:
             account_type (str): The type of account to open ("savings" or "youth").
         """
         owner = input("Enter the owner's name: ")
+        currency = input("Enter the currency (default is CHF): ")
+        currency = currency if currency else 'CHF'  # Use CHF as default if no currency is entered
         account_type = account_type.lower()
+        # Validate the currency
+        if currency not in BankAccount.currency_dict:
+            print(f"{currency} is not a valid currency.")
+            return
 
         # Create an instance of the appropriate account type
         if account_type == "savings":
-            account = SavingsAccount(owner)
+            account = SavingsAccount(owner, currency=currency)
 
         elif account_type == "youth":
             # Ask for the date of birth and create a YouthAccount instance
             try:
                 date_of_birth = input("Enter the date of birth (dd-mm-yyyy): ")
-                account = YouthAccount(owner, date_of_birth)
+                account = YouthAccount(owner, date_of_birth, currency=currency)
 
             except ValueError:
                 print("Invalid date of birth")

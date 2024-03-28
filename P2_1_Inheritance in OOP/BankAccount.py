@@ -33,6 +33,7 @@ class BankAccount:
     DEFAULT_INTEREST_RATE = 0
     def __init__(self, owner, currency="CHF", balance=0.0, negative_balance_allowed=False,
                  last_interest_dist=DEFAULT_LAST_INTEREST,monthly_interest_rate=DEFAULT_INTEREST_RATE):
+        
         """
         Initializes a BankAccount instance.
 
@@ -181,6 +182,7 @@ class BankAccount:
                 self.balance -= float(amount)
                 BankAccount.status_notice("Transaction successfully")
                 result = 1
+        
 
         else:
             BankAccount.status_notice("Invalid Input only positive Numbers are allowed")

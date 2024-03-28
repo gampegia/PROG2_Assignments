@@ -21,9 +21,9 @@ class SavingsAccount(BankAccount):
     DEFAULT_INTEREST_RATE_MONTH = 0.001
 
 
-    def __init__(self, owner, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH):
+    def __init__(self, owner, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH, currency=None):
 
-        super().__init__(owner, balance=balance)
+        super().__init__(owner, balance=balance, currency=currency)
         self.monthly_interest_rate = monthly_interest_rate
         self.balance = balance
         self.type = "savings"
