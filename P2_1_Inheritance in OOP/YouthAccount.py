@@ -22,8 +22,8 @@ class YouthAccount(BankAccount):
     DEFAULT_INTEREST_RATE_MONTH = 0.02
 
     # Class variable holding the list of all generated IBANs
-    def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH):
-        super().__init__(owner, balance=balance)
+    def __init__(self, owner, date_of_birth, balance=0.0, monthly_interest_rate=DEFAULT_INTEREST_RATE_MONTH, currency='CHF'):
+        super().__init__(owner, balance=balance, currency=currency)
         self.date_of_birth = date_of_birth
         self.monthly_interest_rate = monthly_interest_rate
         self.balance = balance

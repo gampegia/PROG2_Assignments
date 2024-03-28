@@ -148,10 +148,13 @@ class BankApplication:
             elif choice == "3":
                 account_number = input("Enter account number: ")
                 self.check_balance(account_number)
-
+                currency = input("Enter the currency: ")
+                
             elif choice == "4":
                 account_number = input("Enter account number: ")
                 amount = input("Enter the amount to deposit: ")
+                currency = input("Enter the currency: ")
+
                 for account in self.accounts:
                     if (account.account_number) == (account_number):
                         account.deposit(amount)
@@ -162,6 +165,8 @@ class BankApplication:
             elif choice == "5":
                 account_number = input("Enter account number: ")
                 amount = input("Enter the amount to withdraw: ")
+                currency = input("Enter the currency: ")
+
                 for account in self.accounts:
                     if (account.account_number) == (account_number):
                         account.withdraw(amount)
