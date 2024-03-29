@@ -10,7 +10,9 @@ Date: 08.03.2024
 """
 
 import random  # Importing the random module for generating random numbers
+from ExchangeRates import ExchangeRates
 import datetime
+
 class BankAccount:
     """
     A class to represent a bank account.
@@ -157,7 +159,7 @@ class BankAccount:
             self.process_month_end()
         return self.balance
 
-    def withdraw(self, amount):
+    def withdraw(self, amount, currency="CHF"):
         """
         Withdraws a specified amount from the account if it is a valid float and if sufficient balance exists.
 
@@ -169,7 +171,24 @@ class BankAccount:
         """
         if self.check_interest_cycle():
             self.process_month_end()
+
+
         if BankAccount.is_float(amount) and float(amount) >= 0:
+            if currency and currency != self.currency:
+                exchange_rates = ExchangeRates()
+                if currency == "USD" and self.currency == "CHF":
+                    amount = amount * exchange_rates.get_usd_chf(float(amount))
+                elif currency == "CHF" and self.currency == "USD":
+                    amount = amount * exchange_rates.get_chf_usd(float(amount))
+                elif currency == "EUR" and self.currency == "USD":
+                    amount = amount * exchange_rates.get_eur_usd(float(amount))
+                elif currency == "USD" and self.currency == "EUR":
+                    amount = amount * exchange_rates.get_usd_eur(float(amount))
+                elif currency == "EUR" and self.currency == "CHF":
+                    amount = amount * exchange_rates.get_eur_chf(float(amount))
+                elif currency == "CHF" and self.currency == "EUR":
+                    amount = amount * exchange_rates.get_chf_eur(float(amount))
+
             if not self.__negative_balance_allowed:
                 if self.balance < float(amount):
                     BankAccount.status_notice("Insufficient balance")
@@ -189,7 +208,7 @@ class BankAccount:
             result = 0
         return result
 
-    def deposit(self, amount):
+    def deposit(self, amount, currency="CHF"):
         """
         Deposits a specified amount into the account if it is a valid float and does not exceed the limit.
 
@@ -201,8 +220,25 @@ class BankAccount:
         """
         if self.check_interest_cycle():
             self.process_month_end()
+
         if BankAccount.is_float(amount) and float(amount) >= 0 and self.balance + float(amount) <= 100000:
             self.balance += float(amount)
+
+            if currency and currency != self.currency:
+                exchange_rates = ExchangeRates()
+                if currency == "USD" and self.currency == "CHF":
+                    amount = amount * exchange_rates.get_usd_chf(float(amount))
+                elif currency == "CHF" and self.currency == "USD":
+                    amount = amount * exchange_rates.get_chf_usd(float(amount))
+                elif currency == "EUR" and self.currency == "USD":
+                    amount = amount * exchange_rates.get_eur_usd(float(amount))
+                elif currency == "USD" and self.currency == "EUR":
+                    amount = amount * exchange_rates.get_usd_eur(float(amount))
+                elif currency == "EUR" and self.currency == "CHF":
+                    amount = amount * exchange_rates.get_eur_chf(float(amount))
+                elif currency == "CHF" and self.currency == "EUR":
+                    amount = amount * exchange_rates.get_chf_eur(float(amount))
+
             BankAccount.status_notice("Transaction successfully")
             result = 1
         else:

@@ -177,17 +177,17 @@ class BankAccount:
             if currency and currency != self.currency:
                 exchange_rates = ExchangeRates()
                 if currency == "USD" and self.currency == "CHF":
-                    amount = amount * exchange_rates.get_usd_chf(float(amount))
+                    amount = exchange_rates.get_usd_chf(float(amount))
                 elif currency == "CHF" and self.currency == "USD":
-                    amount = amount * exchange_rates.get_chf_usd(float(amount))
+                    amount = exchange_rates.get_chf_usd(float(amount))
                 elif currency == "EUR" and self.currency == "USD":
-                    amount = amount * exchange_rates.get_eur_usd(float(amount))
+                    amount = exchange_rates.get_eur_usd(float(amount))
                 elif currency == "USD" and self.currency == "EUR":
-                    amount = amount * exchange_rates.get_usd_eur(float(amount))
+                    amount = exchange_rates.get_usd_eur(float(amount))
                 elif currency == "EUR" and self.currency == "CHF":
-                    amount = amount * exchange_rates.get_eur_chf(float(amount))
+                    amount = exchange_rates.get_eur_chf(float(amount))
                 elif currency == "CHF" and self.currency == "EUR":
-                    amount = amount * exchange_rates.get_chf_eur(float(amount))
+                    amount = exchange_rates.get_chf_eur(float(amount))
 
             if not self.__negative_balance_allowed:
                 if self.balance < float(amount):
@@ -222,23 +222,22 @@ class BankAccount:
             self.process_month_end()
 
         if BankAccount.is_float(amount) and float(amount) >= 0 and self.balance + float(amount) <= 100000:
-            self.balance += float(amount)
-
             if currency and currency != self.currency:
                 exchange_rates = ExchangeRates()
                 if currency == "USD" and self.currency == "CHF":
-                    amount = amount * exchange_rates.get_usd_chf(float(amount))
+                    amount = exchange_rates.get_usd_chf(float(amount))
                 elif currency == "CHF" and self.currency == "USD":
-                    amount = amount * exchange_rates.get_chf_usd(float(amount))
+                    amount = exchange_rates.get_chf_usd(float(amount))
                 elif currency == "EUR" and self.currency == "USD":
-                    amount = amount * exchange_rates.get_eur_usd(float(amount))
+                    amount = exchange_rates.get_eur_usd(float(amount))
                 elif currency == "USD" and self.currency == "EUR":
-                    amount = amount * exchange_rates.get_usd_eur(float(amount))
+                    amount = exchange_rates.get_usd_eur(float(amount))
                 elif currency == "EUR" and self.currency == "CHF":
-                    amount = amount * exchange_rates.get_eur_chf(float(amount))
+                    amount = exchange_rates.get_eur_chf(float(amount))
                 elif currency == "CHF" and self.currency == "EUR":
-                    amount = amount * exchange_rates.get_chf_eur(float(amount))
+                    amount = exchange_rates.get_chf_eur(float(amount))
 
+            self.balance += float(amount)
             BankAccount.status_notice("Transaction successfully")
             result = 1
         else:
