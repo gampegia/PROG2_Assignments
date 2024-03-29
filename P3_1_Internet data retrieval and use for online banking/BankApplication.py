@@ -48,7 +48,7 @@ class BankApplication:
             account_type (str): The type of account to open ("savings" or "youth").
         """
         owner = input("Enter the owner's name: ")
-        currency = input("Enter the currency (default is CHF) choose from CHF, USD, EUR:")
+        currency = input("Enter the currency (default is CHF) \n choose from CHF, USD, EUR:")
         currency = currency if currency else 'CHF'  # Use CHF as default if no currency is entered
         account_type = account_type.lower()
         # Validate the currency
@@ -152,7 +152,7 @@ class BankApplication:
             elif choice == "4":
                 account_number = input("Enter account number: ")
                 amount = input("Enter the amount to deposit: ")
-                currency = input("Enter the currency: CHF, USD, EUR")
+                currency = input("Enter the currency (CHF, USD, EUR): ")
 
                 for account in self.accounts:
                     if (account.account_number) == (account_number):
