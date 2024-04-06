@@ -32,9 +32,9 @@ class Downloader:
     def download(self):
         try:
             age = self._check_age()
-            TEN_MINUTES = timedelta(minutes=10)
+            COOLDOWN = timedelta(minutes=10)
 
-            if age > TEN_MINUTES:
+            if age > COOLDOWN:
                 self._new_download()
                 print(f"'{self.FILENAME}' is now up to date")
             else:
