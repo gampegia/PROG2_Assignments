@@ -18,7 +18,7 @@ class Downloader:
                 file_content = response.content
                 with open(self.FILENAME, 'wb') as file:
                     file.write(file_content)
-                print(f"File '{self.FILENAME}' downloaded successfully!")
+                print(f"'{self.FILENAME}' downloaded successfully!")
             else:
                 print(f"Failed to download file from '{self.URL}'. Status code: {response.status_code}")
         except Exception as e:
@@ -37,11 +37,12 @@ class Downloader:
 
         if age > TEN_MINUTES:
             self._new_download()
-            print(f"{self.FILENAME} is now up to date")
+            print(f"'{self.FILENAME}' is now up to date")
         else:
-            print(f"{self.FILENAME} is already up to date")
+            print(f"'{self.FILENAME}' is already up to date")
 
 
 if __name__ == "__main__":
     downloader = Downloader()
+    downloader._check_age()
     downloader.download()
