@@ -65,7 +65,7 @@ class BOMService:
                           (requests.exceptions.Timeout,
                            requests.exceptions.HTTPError,
                            requests.exceptions.ConnectionError))
-    def get_bom_data(self):
+    def get_bom(self):
         """
         Retrieves BOM data from the specified URL.
 
@@ -143,4 +143,4 @@ class BOMService:
 if __name__ == "__main__":
     URL = "http://160.85.252.148/"  # URL of the BOM service
     bom1 = BOMService(URL)  # Creating an instance of BOMService
-    bom1.get_bom_data()  # Fetching and processing the BOM data
+    bom1.get_bom()  # Fetching and processing the BOM data

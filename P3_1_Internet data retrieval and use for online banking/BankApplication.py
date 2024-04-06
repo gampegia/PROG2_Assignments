@@ -48,7 +48,8 @@ class BankApplication:
             account_type (str): The type of account to open ("savings" or "youth").
         """
         owner = input("Enter the owner's name: ")
-        currency = input("Enter the currency (default is CHF) choose from CHF, USD, EUR: ")
+        currency = (input("Enter the currency (default is CHF) \n choose from CHF, USD, EUR:"))
+        currency = currency.upper()
         currency = currency if currency else 'CHF'  # Use CHF as default if no currency is entered
         account_type = account_type.lower()
         # Validate the currency
@@ -56,8 +57,7 @@ class BankApplication:
             print(f"{currency} is not a valid currency.")
             return
 
-        # Create an instance of the appropriate accou
-        # nt type
+        # Create an instance of the appropriate account type
         if account_type == "savings":
             account = SavingsAccount(owner, currency=currency)
 
@@ -120,8 +120,8 @@ class BankApplication:
         print("3: Check balance")
         print("4: Deposit")
         print("5: Withdraw")
-        print("8: Tax report")
-        print("9: Exit")
+        print("6: Tax report")
+        print("7: Exit")
 
     # Method to run the application
     def run(self):
@@ -153,7 +153,8 @@ class BankApplication:
             elif choice == "4":
                 account_number = input("Enter account number: ")
                 amount = input("Enter the amount to deposit: ")
-                currency = input("Enter the currency: CHF, USD, EUR: ")
+                currency = input("Enter the currency (CHF, USD, EUR): ")
+                currency = currency.upper()
 
                 for account in self.accounts:
                     if (account.account_number) == (account_number):
@@ -165,7 +166,8 @@ class BankApplication:
             elif choice == "5":
                 account_number = input("Enter account number: ")
                 amount = input("Enter the amount to withdraw: ")
-                currency = input("Enter the currency: CHF, USD, EUR: ")
+                currency = (input("Enter the currency: CHF, USD, EUR"))
+                currency = currency.upper()
 
                 for account in self.accounts:
                     if (account.account_number) == (account_number):
@@ -174,13 +176,13 @@ class BankApplication:
                 else:
                     print(f"Account {account_number} not found")
 
-            elif choice == "8":
+            elif choice == "6":
                 current_year = datetime.datetime.now().year
                 print(f"Tax report {current_year} for fiscal year {current_year-1}")
                 print(f"Youth Accounts: {TaxReport(self.accounts).total_balance_youth()} Fr.")
                 print(f"Savings Accounts: {TaxReport(self.accounts).total_balance_savings()} Fr.")
 
-            elif choice == "9":
+            elif choice == "7":
                 print("Program terminated")
                 break
             else:
