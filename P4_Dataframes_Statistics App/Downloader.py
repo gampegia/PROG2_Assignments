@@ -1,8 +1,7 @@
 import requests
 from dataclasses import dataclass
 import os
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 
 @dataclass(frozen=True)
@@ -25,24 +24,25 @@ class Downloader:
             print(f"An error occurred: {e}")
 
     def _check_age(self, filepath=FILENAME):
-
         last_modified_datetime = datetime.fromtimestamp(os.path.getmtime(filepath))
         current_time = datetime.now()
         age = current_time - last_modified_datetime
         return age
 
     def download(self):
-        age = self._check_age()
-        TEN_MINUTES = timedelta(minutes=10)
+        try:
+            age = self._check_age()
+            TEN_MINUTES = timedelta(minutes=10)
 
-        if age > TEN_MINUTES:
+            if age > TEN_MINUTES:
+                self._new_download()
+                print(f"'{self.FILENAME}' is now up to date")
+            else:
+                print(f"'{self.FILENAME}' is already up to date")
+        except FileNotFoundError:
             self._new_download()
-            print(f"'{self.FILENAME}' is now up to date")
-        else:
-            print(f"'{self.FILENAME}' is already up to date")
-
+            print(f"'{self.FILENAME}' is now stored")
 
 if __name__ == "__main__":
     downloader = Downloader()
-    downloader._check_age()
     downloader.download()
