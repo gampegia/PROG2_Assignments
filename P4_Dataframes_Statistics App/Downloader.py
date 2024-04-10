@@ -18,10 +18,13 @@ class Downloader:
                 with open(self.FILENAME, 'wb') as file:
                     file.write(file_content)
                 print(f"'{self.FILENAME}' downloaded successfully!")
+                return True
             else:
                 print(f"Failed to download file from '{self.URL}'. Status code: {response.status_code}")
+                return False
         except Exception as e:
             print(f"An error occurred: {e}")
+            return False
 
     def _check_age(self, filepath=FILENAME):
         last_modified_datetime = datetime.fromtimestamp(os.path.getmtime(filepath))
@@ -35,13 +38,15 @@ class Downloader:
             COOLDOWN = timedelta(minutes=10)
 
             if age > COOLDOWN:
-                self._new_download()
-                print(f"'{self.FILENAME}' is now up to date")
+                download_success = self._new_download()
+                if download_success:
+                    print(f"'{self.FILENAME}' is now up to date")
             else:
                 print(f"'{self.FILENAME}' is already up to date")
         except FileNotFoundError:
             self._new_download()
-            print(f"'{self.FILENAME}' is now stored")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     downloader = Downloader()
