@@ -25,6 +25,16 @@ class TrainConnectionMenu:
                 try:
                     departure_timestamp = section['departure']['departureTimestamp']
                     arrival_timestamp = section['journey']['passList'][-1]['arrivalTimestamp']
+                    delay_timestamp = section['journey']['passList'][-1]['delay']
+
+                    if delay_timestamp is not None:  # Check if delay_timestamp is not None
+                        if delay_timestamp > 0:  # Compare delay_timestamp with 0
+                            delay = f"(+{delay_timestamp})"
+                        else:
+                            delay = ""
+                    else:
+                        delay = ""
+
                     if isinstance(departure_timestamp, int):
                         departure_time = datetime.fromtimestamp(departure_timestamp).strftime('%H:%M')
                         arrival_time = datetime.fromtimestamp(arrival_timestamp).strftime('%H:%M')
@@ -43,9 +53,9 @@ class TrainConnectionMenu:
 
                 if 'journey' in section and section['journey']:
                     journey_name = section['journey']['name']
-                    print(f"{departure_time} {station_name_departure:<20}{platform_departure}")
-                    print(f"      {journey_name}")
-                    print(f"{arrival_time} {station_name_arrival:<20}{platform_arrival}")
+                    print(f"{departure_time} {delay}   {station_name_departure:<20}{platform_departure}")
+                    print(f"         {journey_name}")
+                    print(f"{arrival_time}    {station_name_arrival:<20}{platform_arrival}")
                 else:
                     arrival_time = section['arrival']['arrivalTimestamp'].strftime('%H:%M')
                     arrival_delay = section['arrival']['delay'] if 'delay' in section['arrival'] and section['arrival']['delay'] else ''
