@@ -3,10 +3,26 @@ import TrainConnection
 
 
 class TrainConnectionMenu:
+    """
+    A class to represent a menu for displaying train connections.
+
+    Attributes:
+        connections (list): A list of dictionaries representing train connections.
+    """
+
     def __init__(self, connections):
+        """
+        Initializes a TrainConnectionMenu object with connections data.
+
+        Args:
+            connections (list): A list of dictionaries representing train connections.
+        """
         self.connections = connections
 
     def display_next_connection(self):
+        """
+        Displays the next train connection between specified locations.
+        """
         # Convert departure timestamps to datetime objects
         for conn in self.connections:
             try:
@@ -18,6 +34,9 @@ class TrainConnectionMenu:
         # Sort connections by departure time
         sorted_connections = sorted(self.connections, key=lambda x: x['from']['departureTimestamp'])
 
+        # Print header
+        print(f"{'Time':<10} {'Journey':<15} {'Platform':<10}")
+
         # Print the next connection
         if sorted_connections:
             next_conn = sorted_connections[0]
@@ -25,15 +44,6 @@ class TrainConnectionMenu:
                 try:
                     departure_timestamp = section['departure']['departureTimestamp']
                     arrival_timestamp = section['journey']['passList'][-1]['arrivalTimestamp']
-                    delay_timestamp = section['journey']['passList'][-1]['delay']
-
-                    if delay_timestamp is not None:  # Check if delay_timestamp is not None
-                        if delay_timestamp > 0:  # Compare delay_timestamp with 0
-                            delay = f"(+{delay_timestamp})"
-                        else:
-                            delay = ""
-                    else:
-                        delay = ""
 
                     if isinstance(departure_timestamp, int):
                         departure_time = datetime.fromtimestamp(departure_timestamp).strftime('%H:%M')
@@ -42,7 +52,8 @@ class TrainConnectionMenu:
                         departure_time = departure_timestamp.strftime('%H:%M')
                         arrival_time = arrival_timestamp.strftime('%H:%M')
                 except (KeyError, AttributeError):
-                    print(f"Invalid section data: 'departure.departureTimestamp' key not found or invalid for section: {section}")
+                    print(f"Invalid section data: 'departure.departureTimestamp' "
+                          f"key not found or invalid for section: {section}")
                     continue
 
                 station_name_departure = section['departure']['station']['name']
@@ -50,27 +61,27 @@ class TrainConnectionMenu:
                 platform_departure = section['departure']['platform'] or '-'
                 platform_arrival = section['arrival']['platform'] or '-'
 
+                departure_delay = section['departure']['delay'] if 'delay' in section['departure'] else ''
+                arrival_delay = section['arrival']['delay'] if 'arrival' in section and 'delay' in section[
+                    'arrival'] else ''
 
-                if 'journey' in section and section['journey']:
-                    journey_name = section['journey']['name']
-                    print(f"{departure_time} {delay}   {station_name_departure:<20}{platform_departure}")
-                    print(f"         {journey_name}")
-                    print(f"{arrival_time}    {station_name_arrival:<20}{platform_arrival}")
-                else:
-                    arrival_time = section['arrival']['arrivalTimestamp'].strftime('%H:%M')
-                    arrival_delay = section['arrival']['delay'] if 'delay' in section['arrival'] and section['arrival']['delay'] else ''
-                    print(f"{departure_time} {station_name_departure:<20}{platform_departure}")
-                    print(f"{arrival_time} +{arrival_delay} {section['arrival']['station']['name']}")
+                journey_name = section['journey']['name']
+                print(f"{departure_time} {'+' + str(departure_delay) if departure_delay else '':<5}"
+                      f"{station_name_departure:<20}{platform_departure:<10}")
+                print(f"{journey_name:>17}")
+                print(f"{arrival_time} {'+' + str(arrival_delay) if arrival_delay else '':<5}"
+                      f"{station_name_arrival:<20}{platform_arrival:<10}")
+
         else:
             print("No connections found")
 
+
 if __name__ == "__main__":
     start = "Davos"
-    destination = "Genève"
+    destination = "st moritz"
 
     downloader = TrainConnection.TrainConnection()
     connections = downloader.TrainConnectionDownloader(start, destination)
 
     menu = TrainConnectionMenu(connections)
     menu.display_next_connection()
-
