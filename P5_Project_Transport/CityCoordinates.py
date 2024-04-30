@@ -5,7 +5,7 @@ class CityCoordinates:
         self.city_name = city_name
 
     def get_coordinates(self):
-        url = f"https://nominatim.openstreetmap.org/search?city={self.city_name}&format=json"
+        url = f"https://nominatim.openstreetmap.org/search?q={self.city_name}&format=json"
         response = requests.get(url)
         data = response.json()
         if data:
