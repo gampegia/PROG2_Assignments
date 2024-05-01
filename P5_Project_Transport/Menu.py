@@ -77,8 +77,8 @@ class TrainConnectionMenu:
 
 
 if __name__ == "__main__":
-    start = "Davos"
-    destination = "st moritz"
+    start = "Poschiavo"
+    destination = "St-Cergue"
 
     downloader = TrainConnection.TrainConnection()
     connections = downloader.TrainConnectionDownloader(start, destination)
