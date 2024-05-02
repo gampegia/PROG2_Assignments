@@ -1,7 +1,7 @@
 from TrainConnection import TrainConnection
 from datetime import datetime
 
-# Instantiate the TrainConnection class
+# Instantiate the TrainMenu class
 train_connection_instance = TrainConnection()
 
 # Call the get_TravelPlan method to fetch connections
