@@ -101,8 +101,8 @@ class TrainConnectionMenu:
 
 
 if __name__ == "__main__":
-    start = "Köniz"
-    destination = "Bern"
+    start = "St Moritz"
+    destination = "Milano"
 
     downloader = TrainConnection.TrainConnection()
     connections = downloader.TrainConnectionDownloader(start, destination)
