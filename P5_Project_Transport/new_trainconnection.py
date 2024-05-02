@@ -1,23 +1,40 @@
+import requests
+from dataclasses import dataclass
+import json
 from datetime import datetime
-import TrainConnection
 
-
+@dataclass(frozen=True)
 class TrainConnection:
     """
-    A class to represent a menu for displaying train connections.
+    A class to represent train connections between two locations.
 
     Attributes:
-        connections (list): A list of dictionaries representing train connections.
+        URL (str): The base URL of the Open Data Swiss Public Transport API.
     """
 
-    def __init__(self, connections):
+    URL = f"https://transport.opendata.ch/v1/connections"
+
+    def TrainConnectionDownloader(self, start, destination):
         """
-        Initializes a TrainConnection object with connections data.
+        Downloads train connections between two specified locations.
 
         Args:
-            connections (list): A list of dictionaries representing train connections.
+            start (str): The starting location for the train journey.
+            destination (str): The destination location for the train journey.
+
+        Returns:
+            list: A list of dictionaries representing train connections between the start and destination.
         """
-        self.connections = connections
+        credentials = f"?from={start}&to={destination}"  # Constructing query parameters
+        try:
+            response = requests.get(self.URL + credentials)  # Making a GET request to the API
+            response.raise_for_status()  # Raise an exception for non-2xx status codes
+            api_content = response.content.decode("utf-8")  # Decoding API response content
+            data = json.loads(api_content)  # Parsing JSON response
+            return data.get('connections', [])  # Extracting 'connections' data from the response
+        except Exception as e:
+            print(f"An error occurred: {e}")  # Printing error message if an exception occurs
+            return None  # Returning None if an error occurs
 
     @staticmethod
     def build_print_msg(array):
@@ -55,9 +72,10 @@ class TrainConnection:
         else:
             output = section['journey']['name']
         return output
-    def sort_connections(self):
+
+    def sort_connections(self, connections):
         # Convert departure timestamps to datetime objects
-        for conn in self.connections:
+        for conn in connections:
             try:
                 conn['from']['departureTimestamp'] = datetime.fromtimestamp(conn['from']['departureTimestamp'])
             except KeyError:
@@ -65,8 +83,9 @@ class TrainConnection:
                 continue
 
         # Sort connections by departure time
-        sorted_connections = sorted(self.connections, key=lambda x: x['from']['departureTimestamp'])
+        sorted_connections = sorted(connections, key=lambda x: x['from']['departureTimestamp'])
         return sorted_connections
+
     @staticmethod
     def print_header():
         # Print header
@@ -109,22 +128,25 @@ class TrainConnection:
                                   platform_arrival]
 
         return conn_print_information
-    def display_next_connection(self):
+
+
+    def display_next_connection(self,connection):
         """
         Displays the next train connection between specified locations.
         """
-        sorted_connections = TrainConnection.sort_connections(self)
 
-        TrainConnection.print_header()
+        sorted_connections = self.sort_connections(connection)
+
+        self.print_header()
         str_connection_sections = []
         if sorted_connections:
             next_conn = sorted_connections[0]
             for section in next_conn['sections']:
-                conn_print_information = TrainConnection.get_connection_details(section)
+                conn_print_information = self.get_connection_details(section)
 
-                str_connection_sections.append(TrainConnection.build_print_msg(conn_print_information))
+                str_connection_sections.append(self.build_print_msg(conn_print_information))
 
-            TrainConnection.print_connection(str_connection_sections)
+            self.print_connection(str_connection_sections)
         else:
             print("No connections found")
 
@@ -132,9 +154,6 @@ class TrainConnection:
 if __name__ == "__main__":
     start = "Köniz"
     destination = "Bern"
-
-    downloader = TrainConnection.TrainConnection()
-    connections = downloader.TrainConnectionDownloader(start, destination)
-    # print(connections)
-    menu = TrainConnection(connections)
-    menu.display_next_connection()
+    train_connection = TrainConnection()
+    connection = train_connection.TrainConnectionDownloader(start, destination)
+    train_connection.display_next_connection(connection)

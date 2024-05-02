@@ -12,7 +12,7 @@ class TrainConnectionMenu:
 
     def __init__(self, connections):
         """
-        Initializes a TrainConnectionMenu object with connections data.
+        Initializes a TrainConnection object with connections data.
 
         Args:
             connections (list): A list of dictionaries representing train connections.
@@ -102,7 +102,7 @@ class TrainConnectionMenu:
 
 if __name__ == "__main__":
     start = "Köniz"
-    destination = "Bern"
+    destination = "London"
 
     downloader = TrainConnection.TrainConnection()
     connections = downloader.TrainConnectionDownloader(start, destination)
