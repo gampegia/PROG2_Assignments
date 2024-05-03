@@ -15,6 +15,7 @@ class TrainConnectionMenu:
             print(f"Train connection from {self.start} to {self.destination}")
             train_connection = TrainConnection.TrainConnection()
             connection = train_connection.TrainConnectionDownloader(self.start, self.destination)
+            #print(connection) # DEBUG Statement
             train_connection.display_next_connection(connection)
         else:
             print("Please input a valid route first.")

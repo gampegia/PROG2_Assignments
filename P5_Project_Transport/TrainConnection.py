@@ -70,7 +70,7 @@ class TrainConnection:
         if section['journey'] == None:
             output = "Walk"
         else:
-            output = section['journey']['name']
+            output = str(section['journey']['category']+" "+section['journey']['number'])
         return output
 
     def sort_connections(self, connections):
