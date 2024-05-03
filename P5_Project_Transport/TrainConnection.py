@@ -52,7 +52,7 @@ class TrainConnection:
         output_string = (
             f"{departure_time} {'+' + str(departure_delay) if departure_delay else '':<5}"
             f"{station_name_departure:<20}{platform_departure:<10}\n"
-            f"{journey_name:>17}\n"
+            f"           {journey_name}\n"
             f"{arrival_time} {'+' + str(arrival_delay) if arrival_delay else '':<5}"
             f"{station_name_arrival:<20}{platform_arrival:<10}"
         )
@@ -152,8 +152,8 @@ class TrainConnection:
 
 
 if __name__ == "__main__":
-    start = "Köniz"
-    destination = "Bern"
+    start = "Visp"
+    destination = "Milano"
     train_connection = TrainConnection()
     connection = train_connection.TrainConnectionDownloader(start, destination)
     train_connection.display_next_connection(connection)
