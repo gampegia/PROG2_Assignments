@@ -3,7 +3,11 @@ import requests
 class CityCoordinates:
     def __init__(self, city_name):
         self.city_name = city_name.split(',')[0].strip()
+        self.city_name = self.city_name.replace(' ', '+')
+        self.city_name = self.city_name.lower()
         self.country_name = city_name.split(',')[-1].strip()
+        self.country_name = self.country_name.replace(' ', '+')
+        self.country_name = self.country_name.lower()
 
     def get_coordinates(self):
         url = f"https://nominatim.openstreetmap.org/search?city={self.city_name}&country={self.country_name}&format=json"
@@ -24,6 +28,8 @@ class CityCoordinates:
             return None
 
 if __name__ == "__main__":
-    city = input("City,Country:").lower()
+    city = input("City,Country:")
     city_coordinates = CityCoordinates(city)
     print(city_coordinates.get_city_coordinates())
+
+    
