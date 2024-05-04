@@ -11,7 +11,7 @@ class CityCoordinates:
         self.country_name = self.country_name.replace('oesterreich', 'österreich')
     def get_coordinates(self):
         url = f"https://nominatim.openstreetmap.org/search?city={self.city_name}&country={self.country_name}&format=json"
-        #DER Print muss vorabgabe geschlöscht werden!
+        #Der Print muss vorabgabe geschlöscht werden!
         print(url)
         response = requests.get(url)
         if response.status_code == 200 and response.content:
