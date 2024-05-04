@@ -1,7 +1,7 @@
 from CityCoordinates import get_coordinates
 from dataclasses import dataclass
 import math
-
+import pandas as pd
 
 
 @dataclass
@@ -10,6 +10,7 @@ class Calculator:
     __destination_city: list = None
     __start_city_coordinates: tuple = None
     __destination_city_coordinates: tuple = None
+    _df = pd.read_csv('cities.csv')
 
     def __post_init__(self):
         if self.__start_city:
@@ -21,6 +22,9 @@ class Calculator:
             coordinates = get_coordinates(self.__destination_city[0], self.__destination_city[1])
             if coordinates:
                 self.__destination_city_coordinates = tuple(coordinates)
+
+        self._df['Distance'] = self._df.apply(
+            lambda row: self.calculate_distance_in_df(row['Latitude'], row['Longitude']), axis=1)
 
     def set_start_city(self, start_city, start_country):
         self.__start_city = [start_city, start_country]
@@ -34,32 +38,70 @@ class Calculator:
     def get_destination_city(self):
         return self.__destination_city
 
-    def get_distance(self):
-        # haversine distance calculator
-
-        lat1 = self.__start_city_coordinates[0]
-        lat2 = self.__destination_city_coordinates[0]
-        lon1 = self.__start_city_coordinates[1]
-        lon2 = self.__destination_city_coordinates[1]
-
+    def haversine(self, lon1, lat1, lon2, lat2):
+        """
+        Calculate the great circle distance between two points
+        on the earth (specified in decimal degrees)
+        """
         # Convert decimal degrees to radians
-        lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
+        lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
 
         # Haversine formula
         dlon = lon2 - lon1
         dlat = lat2 - lat1
         a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-        radius = 6371  # Radius of Earth in kilometers
+        distance = 6371 * c  # Radius of Earth in kilometers
+        return distance
 
-        return c * radius
+    def calculate_distance_in_df(self, latitude_start, longitude_start):
+        if self.__destination_city_coordinates:
+            if latitude_start and longitude_start:
+                lat1, lon1 = latitude_start, longitude_start
+            else:
+                lat1, lon1 = self.__start_city_coordinates
+
+            lat2, lon2 = self.__destination_city_coordinates
+
+            distance = self.haversine(lon1, lat1, lon2, lat2)
+
+            return distance
+        else:
+            return None
+
+    def angle_between_points(self, lon_start, lat_start, lon_dest1, lat_dest1, lon_dest2, lat_dest2):
+        # Calculate distances
+        dist_start_dest1 = self.haversine(lon_start, lat_start, lon_dest1, lat_dest1)
+        dist_start_dest2 = self.haversine(lon_start, lat_start, lon_dest2, lat_dest2)
+        dist_dest1_dest2 = self.haversine(lon_dest1, lat_dest1, lon_dest2, lat_dest2)
+
+        # Use law of cosines to calculate the angle
+        cos_angle = (dist_start_dest1 ** 2 + dist_start_dest2 ** 2 - dist_dest1_dest2 ** 2) / (
+                    2 * dist_start_dest1 * dist_start_dest2)
+        angle_rad = math.acos(cos_angle)
+        angle_deg = math.degrees(angle_rad)
+
+        return angle_deg
+
+    def choose_transfer_station(self):
+        self._df = self._df.sort_values(by='Distance')
+
+        # set variables lon_start, lat_start, lon_dest1, lat_dest1 to calc the angle
+
+        # iterate over the sorted dataframe, break if angle < 20
+        # choose the first station as transferstation if this condition is true
+
+        for row_tuple in self._df.itertuples():
+            angle = row_tuple
+
 
 
 if __name__ == "__main__":
     calculator = Calculator()
     calculator.set_start_city("Männedorf", "Switzerland")
+    calculator.set_destination_city("Hamburg", "Germany")
+    calculator.__post_init__()  # Explicitly call post_init after setting cities
     print(calculator.get_start_city())
-    calculator.set_destination_city("Meilen", "Switzerland")
     print(calculator.get_destination_city())
     print(get_coordinates("Männedorf", "Switzerland"))
-    print(calculator.get_distance())
+    print(calculator._df)

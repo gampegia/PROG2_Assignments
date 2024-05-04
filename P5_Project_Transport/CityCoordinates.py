@@ -9,8 +9,8 @@ def get_coordinates(city_name, country_name):
     if response.status_code == 200 and response.content:
         data = response.json()
         if data:
-            latitude = data[0]['lat']
-            longitude = data[0]['lon']
+            latitude = float(data[0]['lat'])
+            longitude = float(data[0]['lon'])
             return latitude, longitude
     return None
 
