@@ -22,4 +22,4 @@ for index, row in df.iterrows():
     df.loc[index, 'Longitude'] = coordinates[1]
 
 print(df)
-df.to_csv("cities", sep=',', index=False, encoding='utf-8')
+df.to_csv("cities.csv", sep=',', index=False, encoding='utf-8')
