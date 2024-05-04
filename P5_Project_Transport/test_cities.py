@@ -16,7 +16,7 @@ def check_train_connections(file_name):
     # check for connections
     for i in range(len(cities)):
         for j in range(i+1, len(cities)):
-            start = cities[i]
+            start = cities[i+1]
             destination = cities[j]
             connection = train_connection.TrainConnectionDownloader(start, destination)
             if connection:
