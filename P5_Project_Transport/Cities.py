@@ -21,4 +21,6 @@ for index, row in df.iterrows():
     df.loc[index, 'Latitude'] = coordinates[0]
     df.loc[index, 'Longitude'] = coordinates[1]
 
-print(df)
+
+df.to_csv('CityCoordinates.csv', index=False)
+
