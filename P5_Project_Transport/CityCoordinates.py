@@ -8,7 +8,7 @@ class CityCoordinates:
         self.country_name = city_name.split(',')[-1].strip()
         self.country_name = self.country_name.replace(' ', '+')
         self.country_name = self.country_name.lower()
-
+        self.country_name = self.country_name.replace('oesterreich', 'österreich')
     def get_coordinates(self):
         url = f"https://nominatim.openstreetmap.org/search?city={self.city_name}&country={self.country_name}&format=json"
         response = requests.get(url)
