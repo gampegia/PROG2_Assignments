@@ -16,7 +16,7 @@ class Blacklist:
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return timestamp
 
-    def check_entry_exists(self, start_city, start_country, destination_city, destination_country):
+    def check_blacklist(self, start_city, start_country, destination_city, destination_country):
         """
         Check if a given route (start_city, start_country, destination_city, destination_country) is present in the blacklist CSV file.
         The comparison is case-insensitive.
@@ -49,7 +49,7 @@ class Blacklist:
             destination_city (str): The destination city of the route.
             destination_country (str): The destination country of the route.
         """
-        if not self.check_entry_exists(start_city, start_country, destination_city, destination_country):
+        if not self.check_blacklist(start_city, start_country, destination_city, destination_country):
             with open('Blacklist.csv', 'a', newline='', encoding='utf-8') as csvfile:
                 csvwriter = csv.writer(csvfile)
                 # Write lowercase entries to the CSV file
