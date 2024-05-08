@@ -1,7 +1,17 @@
 import requests
 
-
 def get_coordinates(city_name, country_name):
+    """
+    Retrieve the latitude and longitude coordinates of a city using the Nominatim OpenStreetMap API.
+
+    Args:
+        city_name (str): The name of the city.
+        country_name (str): The name of the country.
+
+    Returns:
+        tuple: A tuple containing the latitude and longitude coordinates of the city as floats.
+               If the city is not found or an error occurs, returns None.
+    """
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                              '(KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
     url = f"https://nominatim.openstreetmap.org/search?city={city_name}&country={country_name}&format=json"
@@ -13,7 +23,6 @@ def get_coordinates(city_name, country_name):
             longitude = float(data[0]['lon'])
             return latitude, longitude
     return None
-
 
 if __name__ == "__main__":
     country = "Balzers"
