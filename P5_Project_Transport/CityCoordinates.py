@@ -16,6 +16,6 @@ def get_coordinates(city_name, country_name):
 
 
 if __name__ == "__main__":
-    country = "Österreich"
-    city = "Wien"
+    country = "Balzers"
+    city = "Schweiz"
     print(get_coordinates(city, country))
