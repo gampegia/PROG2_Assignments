@@ -10,8 +10,8 @@ def create_cities_dataframe():
     """
     # Define your data
     data = {
-        "City": ['Altach', 'Altstätten', 'Arbon', 'Au', 'Balzers', 'Basel', 'Bregenz', 'Buchs', 'Diepoldsau', 'Dornbirn', 'Eichberg', 'Feldkirch', 'Friedrichshafen', 'Gams', 'Haag', 'Heerbrugg', 'Koblach', 'Konstanz', 'Kreuzlingen', 'Kriessern', 'Küssaberg', 'Lindau', 'Lörrach', 'Lustenau', 'Mäder', 'Montlingen', 'Mulhouse', 'Oberriet', 'Rankweil', 'Rheinfelden', 'Romanshorn', 'Rorschach', 'Rüthi', 'Sankt-Ludwig', 'Sankt-Gallen', 'Sargans', 'Schaan', 'Schaffhausen', 'Sevelen', 'Singen', 'St.Margrethen', 'Überlingen', 'Waldshut-Tiengen', 'Weil-am-Rhein', 'Widnau', 'Mailand', 'Como', 'Genf', 'Lausanne', 'Sion', 'Biel'],
-        "Country": ['Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Österreich', 'Österreich', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Schweiz', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Österreich', 'Österreich', 'Schweiz', 'Frankreich', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz', 'Frankreich', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Schweiz', 'Deutschland', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Schweiz', 'Italien', 'Italien', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz']
+        "City": ['Altstätten-SG', 'Arbon', 'Au-ZH', 'Balzers', 'Basel-SBB', 'Bregenz', 'Buchs-SG', 'Diepoldsau', 'Dornbirn-Bahnhof', 'Linz', 'Feldkirch', 'Friedrichshafen', 'Gams', 'Haag', 'Heerbrugg', 'Koblach', 'Konstanz', 'Kreuzlingen', 'Kriessern', 'Küssaberg', 'Lindau', 'Lörrach', 'Lustenau', 'Mäder', 'Montlingen', 'Mulhouse', 'Oberriet-SG', 'Rankweil', 'Rheinfelden', 'Romanshorn', 'Rorschach', 'Rüthi-SG', 'Mulhouse', 'St.Gallen', 'Sargans', 'Schaan-Bahnhof', 'Schaffhausen', 'Sevelen', 'Singen', 'St.Margrethen', 'Überlingen', 'Waldshut-Tiengen', 'Weil-am-Rhein', 'Widnau', 'Mailand', 'Como', 'Genève', 'Lausanne', 'Sion', 'Biel/Bienne'],
+        "Country": ['Schweiz', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Österreich', 'Österreich', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Schweiz', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Österreich', 'Österreich', 'Schweiz', 'Frankreich', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz', 'Frankreich', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Schweiz', 'Deutschland', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Schweiz', 'Italien', 'Italien', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz']
     }
     df = pd.DataFrame(data)
 
@@ -24,7 +24,7 @@ def create_cities_dataframe():
         city = row['City']
         country = row['Country']
         coordinates = get_coordinates(city, country)
-        print(coordinates)
+        print(city,coordinates)
         if coordinates:
             df.loc[index, 'Latitude'] = coordinates[0]
             df.loc[index, 'Longitude'] = coordinates[1]

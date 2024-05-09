@@ -16,9 +16,10 @@ def check_train_connections(file_name):
     # check for connections
     for i in range(len(cities)):
         for j in range(i+1, len(cities)):
-            start = cities[i+1]
+            start = "Zürich HB"
             destination = cities[j]
             connection = train_connection.TrainConnectionDownloader(start, destination)
+            print(connection)
             if connection:
                 has_connection.append((start, destination))
             else:
@@ -26,7 +27,7 @@ def check_train_connections(file_name):
 
     
 if __name__ == "__main__":
-    check_train_connections('CityCoordinates.csv')
+    check_train_connections('cities.csv')
     print(f"Cities with connection: {has_connection}")
     print(f"Cities without connection: {no_connection}")
 

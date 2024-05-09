@@ -57,38 +57,40 @@ class TrainConnection:
             f"{station_name_arrival:<20}{platform_arrival:<10}"
         )
         return output_string
+
     @staticmethod
     def print_connection(str_connection_sections):
-
         for section in str_connection_sections:
             print(section)
 
-
     @staticmethod
     def get_journey_name(section):
-
-        if section['journey'] == None:
+        if section['journey'] is None:
             output = "Walk"
         else:
-            output = str(section['journey']['category']+" "+section['journey']['number'])
+            output = str(section['journey']['category'] + " " + section['journey']['number'])
         return output
 
     def sort_connections(self, connections):
+        def parse_timestamp(timestamp):
+            if isinstance(timestamp, int):
+                return datetime.fromtimestamp(timestamp)
+            return timestamp
+
         # Convert departure timestamps to datetime objects
         for conn in connections:
             try:
-                conn['from']['departureTimestamp'] = datetime.fromtimestamp(conn['from']['departureTimestamp'])
+                conn['from']['parsedDepartureTimestamp'] = parse_timestamp(conn['from']['departureTimestamp'])
             except KeyError:
                 print(f"Invalid connection data: 'from.departureTimestamp' key not found for connection: {conn}")
                 continue
 
-        # Sort connections by departure time
-        sorted_connections = sorted(connections, key=lambda x: x['from']['departureTimestamp'])
+        # Sort connections by parsed departure time
+        sorted_connections = sorted(connections, key=lambda x: x['from']['parsedDepartureTimestamp'])
         return sorted_connections
 
     @staticmethod
     def print_header():
-        # Print header
         print(f"{'Time':<10} {'Journey':<15} {'Platform':<10}")
 
     @staticmethod
@@ -104,38 +106,50 @@ class TrainConnection:
                 departure_time = departure_timestamp.strftime('%H:%M')
                 arrival_time = arrival_timestamp.strftime('%H:%M')
         except (KeyError, AttributeError):
-            print(f"Invalid section data: 'departure.departureTimestamp' "
-                  f"key not found or invalid for section: {section}")
+            print(f"Invalid section data: 'departure.departureTimestamp' key not found or invalid for section: {section}")
 
         station_name_departure = section['departure']['station']['name']
         station_name_arrival = section['arrival']['station']['name']
         platform_departure = section['departure']['platform'] or ''
         platform_arrival = section['arrival']['platform'] or ''
-
         departure_delay = section['departure']['delay'] if 'delay' in section['departure'] else ''
-        arrival_delay = section['arrival']['delay'] if 'arrival' in section and 'delay' in section[
-            'arrival'] else ''
+        arrival_delay = section['arrival']['delay'] if 'arrival' in section and 'delay' in section['arrival'] else ''
 
         journey_name = TrainConnection.get_journey_name(section)
-        conn_print_information = [departure_time,
-                                  departure_delay,
-                                  station_name_departure,
-                                  platform_departure,
-                                  journey_name,
-                                  arrival_time,
-                                  arrival_delay,
-                                  station_name_arrival,
-                                  platform_arrival]
+        conn_print_information = [
+            departure_time,
+            departure_delay,
+            station_name_departure,
+            platform_departure,
+            journey_name,
+            arrival_time,
+            arrival_delay,
+            station_name_arrival,
+            platform_arrival
+        ]
 
         return conn_print_information
 
+    @staticmethod
+    def get_arrival_city(connection):
+        destination_station = connection['to']['station']['name']
+        return destination_station
 
-    def display_next_connection(self,connection):
+    def has_connection(self, connections):
+        sorted_connections = self.sort_connections(connections)
+        if sorted_connections:
+            result = True
+            station = TrainConnection.get_arrival_city(sorted_connections[0])
+        else:
+            result = False
+            station = None
+        return result, station
+
+    def display_next_connection(self, connections):
         """
         Displays the next train connection between specified locations.
         """
-
-        sorted_connections = self.sort_connections(connection)
+        sorted_connections = self.sort_connections(connections)
 
         self.print_header()
         str_connection_sections = []
@@ -153,7 +167,8 @@ class TrainConnection:
 
 if __name__ == "__main__":
     start = "Visp"
-    destination = "Milano"
+    destination = "Bern"
     train_connection = TrainConnection()
     connection = train_connection.TrainConnectionDownloader(start, destination)
     train_connection.display_next_connection(connection)
+    print(train_connection.has_connection(connection))
