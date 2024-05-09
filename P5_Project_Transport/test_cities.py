@@ -26,7 +26,7 @@ def check_train_connections(file_name):
 
     
 if __name__ == "__main__":
-    check_train_connections('CityCoordinates.csv')
+    check_train_connections('cities.csv')
     print(f"Cities with connection: {has_connection}")
     print(f"Cities without connection: {no_connection}")
 
