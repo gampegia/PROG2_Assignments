@@ -1,25 +1,37 @@
 import pandas as pd
-from CityCoordinates import CityCoordinates
+from CityCoordinates import get_coordinates
 
-# Define your data
-data = {
-    "City": ['Altach', 'Altstätten', 'Arbon', 'Au', 'Balzers', 'Basel', 'Bregenz', 'Buchs', 'Diepoldsau', 'Dornbirn', 'Eichberg', 'Feldkirch', 'Friedrichshafen', 'Gams', 'Haag', 'Heerbrugg', 'Koblach', 'Konstanz', 'Kreuzlingen', 'Kriessern', 'Küssaberg', 'Lindau', 'Lörrach', 'Lustenau', 'Mäder', 'Montlingen', 'Mulhouse', 'Oberriet', 'Rankweil', 'Rheinfelden', 'Romanshorn', 'Rorschach', 'Rüthi', 'Rüthi', 'Sankt-Ludwig', 'Sankt-Gallen', 'Sargans', 'Schaan', 'Schaffhausen', 'Sevelen', 'Singen', 'St.Margrethen', 'Überlingen', 'Vaduz', 'Waldshut-Tiengen', 'Weil-am-Rhein', 'Widnau', 'Mailand', 'Como'],
-    "Country": ['Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Österreich', 'Schweiz', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Schweiz', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Österreich', 'Österreich', 'Schweiz', 'Frankreich', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Frankreich', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Schweiz', 'Deutschland', 'Schweiz', 'Deutschland', 'Liechtenstein', 'Deutschland', 'Deutschland', 'Schweiz', 'Italien', 'Italien']
-}
-df = pd.DataFrame(data)
+def create_cities_dataframe():
+    """
+    Create a pandas DataFrame with cities and their corresponding countries, and populate the latitude and longitude columns using the get_coordinates function from the CityCoordinates module.
 
-# Initialize columns for latitude and longitude
-df['Latitude'] = None
-df['Longitude'] = None
+    Returns:
+        pandas.DataFrame: A DataFrame containing columns for City, Country, Latitude, and Longitude.
+    """
+    # Define your data
+    data = {
+        "City": ['Altach', 'Altstätten', 'Arbon', 'Au', 'Balzers', 'Basel', 'Bregenz', 'Buchs', 'Diepoldsau', 'Dornbirn', 'Eichberg', 'Feldkirch', 'Friedrichshafen', 'Gams', 'Haag', 'Heerbrugg', 'Koblach', 'Konstanz', 'Kreuzlingen', 'Kriessern', 'Küssaberg', 'Lindau', 'Lörrach', 'Lustenau', 'Mäder', 'Montlingen', 'Mulhouse', 'Oberriet', 'Rankweil', 'Rheinfelden', 'Romanshorn', 'Rorschach', 'Rüthi', 'Sankt-Ludwig', 'Sankt-Gallen', 'Sargans', 'Schaan', 'Schaffhausen', 'Sevelen', 'Singen', 'St.Margrethen', 'Überlingen', 'Waldshut-Tiengen', 'Weil-am-Rhein', 'Widnau', 'Mailand', 'Como', 'Genf', 'Lausanne', 'Sion', 'Biel'],
+        "Country": ['Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Österreich', 'Österreich', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Schweiz', 'Österreich', 'Deutschland', 'Schweiz', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Österreich', 'Österreich', 'Schweiz', 'Frankreich', 'Schweiz', 'Österreich', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz', 'Frankreich', 'Schweiz', 'Schweiz', 'Liechtenstein', 'Schweiz', 'Schweiz', 'Deutschland', 'Schweiz', 'Deutschland', 'Deutschland', 'Deutschland', 'Schweiz', 'Italien', 'Italien', 'Schweiz', 'Schweiz', 'Schweiz', 'Schweiz']
+    }
+    df = pd.DataFrame(data)
 
-# Populate latitude and longitude using CityCoordinates class
-for index, row in df.iterrows():
-    city = row['City']
-    country = row['Country']
-    city_country = f"{city}-{country}"
-    coordinates = CityCoordinates(city_country).get_city_coordinates()
-    df.loc[index, 'Latitude'] = coordinates[0]
-    df.loc[index, 'Longitude'] = coordinates[1]
+    # Initialize columns for latitude and longitude
+    df['Latitude'] = None
+    df['Longitude'] = None
 
-print(df)
-df.to_csv("cities.csv", sep=',', index=False, encoding='utf-8')
+    # Populate latitude and longitude using CityCoordinates class
+    for index, row in df.iterrows():
+        city = row['City']
+        country = row['Country']
+        coordinates = get_coordinates(city, country)
+        print(coordinates)
+        if coordinates:
+            df.loc[index, 'Latitude'] = coordinates[0]
+            df.loc[index, 'Longitude'] = coordinates[1]
+
+    return df
+
+if __name__ == "__main__":
+    df = create_cities_dataframe()
+    print(df)
+    df.to_csv("cities.csv", sep=',', index=False, encoding='utf-8')
