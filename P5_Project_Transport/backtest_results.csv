@@ -1,0 +1,54 @@
+start,destination,has_connection
+Zürich HB,Altstätten-SG,ja
+Zürich HB,Arbon,ja
+Zürich HB,Au-ZH,ja
+Zürich HB,Balzers,nein
+Zürich HB,Basel-SBB,ja
+Zürich HB,Bregenz,ja
+Zürich HB,Buchs-SG,nein
+Zürich HB,Diepoldsau,nein
+Zürich HB,Dornbirn-Bahnhof,ja
+Zürich HB,Linz,nein
+Zürich HB,Feldkirch-Bahnhof,ja
+Zürich HB,Friedrichshafen-Stadt,ja
+Zürich HB,Gams,nein
+Zürich HB,Haag,nein
+Zürich HB,Heerbrugg,ja
+Zürich HB,Koblach,ja
+Zürich HB,Konstanz,ja
+Zürich HB,Kreuzlingen,ja
+Zürich HB,Kriessern,nein
+Zürich HB,Küssaberg,nein
+Zürich HB,Lindau,nein
+Zürich HB,Lörrach-Stetten,nein
+Zürich HB,Lustenau,ja
+Zürich HB,Mäder,ja
+Zürich HB,Montlingen-Hirschen,ja
+Zürich HB,Mulhouse,ja
+Zürich HB,Oberriet-SG,ja
+Zürich HB,Rankweil,ja
+Zürich HB,Rheinfelden-Bahnhof,ja
+Zürich HB,Romanshorn,ja
+Zürich HB,Rorschach,ja
+Zürich HB,Rüthi-SG,ja
+Zürich HB,Mulhouse,ja
+Zürich HB,St.-Gallen,ja
+Zürich HB,Sargans,ja
+Zürich HB,Schaan-Bahnhof,ja
+Zürich HB,Schaffhausen-Bahnhof,nein
+Zürich HB,Sevelen-Bahnhof,ja
+Zürich HB,Singen,nein
+Zürich HB,St.Margrethen,nein
+Zürich HB,Überlingen,ja
+Zürich HB,Waldshut-Tiengen,nein
+Zürich HB,Weil-am-Rhein,ja
+Zürich HB,Widnau,nein
+Zürich HB,Mailand,nein
+Zürich HB,Como-S.-Giovanni,ja
+Zürich HB,Genève,ja
+Zürich HB,Lausanne,ja
+Zürich HB,Sion,ja
+Zürich HB,Biel/Bienne,ja
+
+Total Connections,Total No Connections
+34,16
