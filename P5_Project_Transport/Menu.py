@@ -8,15 +8,16 @@ class TrainConnectionMenu:
         self.start = None
         self.destination = None
         self.destination_country = None
+        self.df = pd.read_csv('countrytrainmapping.csv')
 
     def input_route(self):
         self.start = input("Enter the start city: ")
         self.destination = input("Enter the destination city: ")
-        self.destination_country = input("Enter the destination country: ")
+        self.destination_country = (input("Enter the destination country: ")).lower()
 
     def get_train_website(self):
         website = self.df.loc[self.df['Country'] == self.destination_country, 'Website'].values[0]
-        return website
+        print(f"Visit {website} for more information.")
 
     def display_connection(self):
         if self.start and self.destination:
@@ -32,3 +33,4 @@ if __name__ == "__main__":
     menu = TrainConnectionMenu()
     menu.input_route()
     menu.display_connection()
+    menu.get_train_website()
