@@ -29,6 +29,13 @@ class TrainConnectionMenu:
         else:
             print("Please input a valid route first.")
 
+    def check_blacklist(self):
+        blacklist = Blacklist.Blacklist()
+        if blacklist.is_blacklisted(self.destination):
+            print(f"{self.destination} is blacklisted.")
+        else:
+            print(f"{self.destination} is not blacklisted.")
+
 if __name__ == "__main__":
     menu = TrainConnectionMenu()
     menu.input_route()

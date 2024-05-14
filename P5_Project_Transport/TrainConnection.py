@@ -14,18 +14,18 @@ class TrainConnection:
 
     URL = f"https://transport.opendata.ch/v1/connections"
 
-    def TrainConnectionDownloader(self, start, destination):
+    def TrainConnectionDownloader(self, start_city, destination_city):
         """
         Downloads train connections between two specified locations.
 
         Args:
-            start (str): The starting location for the train journey.
-            destination (str): The destination location for the train journey.
+            start_city (str): The starting location for the train journey.
+            destination_city (str): The destination location for the train journey.
 
         Returns:
-            list: A list of dictionaries representing train connections between the start and destination.
+            list: A list of dictionaries representing train connections between the start_city and destination_city.
         """
-        credentials = f"?from={start}&to={destination}"  # Constructing query parameters
+        credentials = f"?from={start_city}&to={destination_city}"  # Constructing query parameters
         try:
             response = requests.get(self.URL + credentials)  # Making a GET request to the API
             response.raise_for_status()  # Raise an exception for non-2xx status codes
@@ -166,9 +166,9 @@ class TrainConnection:
 
 
 if __name__ == "__main__":
-    start = "Bern"
-    destination = "Milano"
+    start_city = "Bern"
+    destination_city = "Milano"
     train_connection = TrainConnection()
-    connection = train_connection.TrainConnectionDownloader(start, destination)
+    connection = train_connection.TrainConnectionDownloader(start_city, destination_city)
     train_connection.display_next_connection(connection)
     print(train_connection.has_connection(connection))
