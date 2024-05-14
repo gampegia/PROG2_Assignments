@@ -31,7 +31,6 @@ class TrainConnectionMenu:
                 calculator = Calculator.Calculator()
                 calculator.set_start_city(self.start_city, 'switzerland')
                 calculator.set_destination_city(self.destination_city, self.destination_country)
-                calculator.set_destination_city(self.destination_city, self.destination_country)
                 calculator.__post_init__()
                 next_station = calculator.choose_transfer_station()
                 print(f"No direct connection found. The nearest station to {self.destination_city} is {next_station}.")
