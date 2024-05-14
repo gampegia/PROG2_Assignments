@@ -1,16 +1,17 @@
 import pandas as pd
 import TrainConnection
 import Blacklist
+import countrymapping
 
 class TrainConnectionMenu:
     def __init__(self):
-        self.start_city = None
-        self.destination_city = None
+        self.start = None
+        self.destination = None
         self.destination_country = None
 
     def input_route(self):
-        self.start_city = input("Enter the start city: ")
-        self.destination_city = input("Enter the destination city: ")
+        self.start = input("Enter the start city: ")
+        self.destination = input("Enter the destination city: ")
         self.destination_country = input("Enter the destination country: ")
 
     def get_train_website(self):

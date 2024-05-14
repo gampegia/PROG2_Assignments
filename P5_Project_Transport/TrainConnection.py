@@ -166,8 +166,8 @@ class TrainConnection:
 
 
 if __name__ == "__main__":
-    start = "Visp"
-    destination = "Bern"
+    start = "Bern"
+    destination = "Milano"
     train_connection = TrainConnection()
     connection = train_connection.TrainConnectionDownloader(start, destination)
     train_connection.display_next_connection(connection)
