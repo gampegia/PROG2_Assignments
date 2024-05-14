@@ -174,7 +174,7 @@ class Calculator:
 if __name__ == "__main__":
     calculator = Calculator()
     calculator.set_start_city("Zürich", "Switzerland")
-    calculator.set_destination_city("Turin", "Italy")
+    calculator.set_destination_city("Nizza", "France")
     calculator.__post_init__()  # Explicitly call post_init after setting cities
     print(calculator.get_start_city())
     print(calculator.get_destination_city())
