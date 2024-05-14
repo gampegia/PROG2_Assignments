@@ -2,6 +2,8 @@ import pandas as pd
 import TrainConnection
 import Blacklist
 import countrymapping
+import CityCoordinates
+import Calculator
 
 class TrainConnectionMenu:
     def __init__(self):
@@ -24,20 +26,27 @@ class TrainConnectionMenu:
             print(f"Train connection from {self.start_city} to {self.destination_city}")
             train_connection = TrainConnection.TrainConnection()
             connection = train_connection.TrainConnectionDownloader(self.start_city, self.destination_city)
-            #print(connection) # DEBUG Statement
-            train_connection.display_next_connection(connection)
+            if connection:
+                train_connection.display_next_connection(connection)
+            else:
+                calculator = Calculator.Calculator()
+                calculator.set_start_city(self.start_city, 'switzerland')
+                calculator.set_destination_city(self.destination_city, self.destination_country)
+                calculator.set_destination_city(self.destination_city, self.destination_country)
+                calculator.__post_init__()
+                next_station = calculator.choose_transfer_station()
+                print(f"No direct connection found. The nearest station to {self.destination_city} is {next_station}.")
+                print(f"Finding connection to {next_station}...")
+                connection_to_next_station = train_connection.TrainConnectionDownloader(self.start_city, next_station)
+                train_connection.display_next_connection(connection_to_next_station)
+                train_connection.display_next_connection(connection)
         else:
             print("Please input a valid route first.")
-
-    def check_blacklist(self):
-        blacklist = Blacklist.Blacklist()
-        if blacklist.is_blacklisted(self.destination):
-            print(f"{self.destination} is blacklisted.")
-        else:
-            print(f"{self.destination} is not blacklisted.")
+ 
 
 if __name__ == "__main__":
     menu = TrainConnectionMenu()
     menu.input_route()
     menu.display_connection()
     menu.get_train_website()
+    menu.check_blacklist()
