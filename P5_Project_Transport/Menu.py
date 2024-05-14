@@ -1,6 +1,5 @@
 import pandas as pd
 import TrainConnection
-import Blacklist
 import countrymapping
 import CityCoordinates
 import Calculator
@@ -49,4 +48,4 @@ if __name__ == "__main__":
     menu.input_route()
     menu.display_connection()
     menu.get_train_website()
-    menu.check_blacklist()
+
