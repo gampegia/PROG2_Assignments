@@ -85,7 +85,8 @@ class TrainConnectionMenu:
 
                         if next_station is None:
                             blacklist_checker.write_to_blacklist(self.start_city, self.start_country, self.destination_city, self.destination_country)
-                            print(f"The requested route from {self.start_city} to {self.destination_city} does not exist and has been blacklisted")
+                            msg_blacklisted = f"The requested route from {self.start_city} to {self.destination_city} does not exist and has been blacklisted"
+                            TrainConnectionMenu.set_console_output(msg_blacklisted)
 
                         else:
                             msg_not_found = (f"No direct connection found. The nearest station to "
