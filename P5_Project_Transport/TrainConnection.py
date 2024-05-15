@@ -162,7 +162,8 @@ class TrainConnection:
 
             self.print_connection(str_connection_sections)
         else:
-            print("No connections found")
+            pass
+            #print("No connections found")
 
 
 if __name__ == "__main__":

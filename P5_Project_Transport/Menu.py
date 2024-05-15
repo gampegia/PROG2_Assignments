@@ -25,6 +25,7 @@ class TrainConnectionMenu:
         """
         Get input from the user for start city, destination city, and destination country.
         """
+        print("Enter all entries in English or the exact name of the destination!")
         self.start_city = input("Enter the start city: ")
         self.start_country = input("Enter the start country: ").lower()
         self.destination_city = input("Enter the destination city: ")
@@ -61,7 +62,7 @@ class TrainConnectionMenu:
             blacklist_checker = Blacklist.Blacklist()
             if blacklist_checker.check_blacklist(self.start_city, self.start_country, self.destination_city, self.destination_country):
                 msg_blacklist = (f"The Route from {self.start_city} to "
-                                 f"{self.destination_city} is on the blacklist, try another one.")
+                                 f"{self.destination_city} is inexistent and on the blacklist, try another one.")
                 TrainConnectionMenu.set_console_output(msg_blacklist)
             else:
                 try:
@@ -81,15 +82,22 @@ class TrainConnectionMenu:
                         calculator.__post_init__()
 
                         next_station = calculator.choose_transfer_station()
-                        msg_not_found = (f"No direct connection found. The nearest station to "
-                                         f"{self.destination_city} is {next_station}.")
-                        msg_finding_alternative = f"Finding connection to {next_station}..."
-                        TrainConnectionMenu.set_console_output(msg_not_found)
-                        TrainConnectionMenu.set_console_output(msg_finding_alternative)
 
-                        connection_to_next_station = train_connection.TrainConnectionDownloader(self.start_city, next_station)
-                        train_connection.display_next_connection(connection_to_next_station)
-                        train_connection.display_next_connection(connection)
+                        if next_station is None:
+                            blacklist_checker.write_to_blacklist(self.start_city, self.start_country, self.destination_city, self.destination_country)
+                            msg_blacklisted = f"The requested route from {self.start_city} to {self.destination_city} does not exist and has been blacklisted"
+                            TrainConnectionMenu.set_console_output(msg_blacklisted)
+
+                        else:
+                            msg_not_found = (f"No direct connection found. The nearest station to "
+                                             f"{self.destination_city} is {next_station}.")
+                            msg_finding_alternative = f"Finding connection to {next_station}..."
+                            TrainConnectionMenu.set_console_output(msg_not_found)
+                            TrainConnectionMenu.set_console_output(msg_finding_alternative)
+
+                            connection_to_next_station = train_connection.TrainConnectionDownloader(self.start_city, next_station)
+                            train_connection.display_next_connection(connection_to_next_station)
+                            train_connection.display_next_connection(connection)
                 except Exception as e:
                     msg_invalid_route = f"An unexpected error occurred while displaying the connection: {e}"
                     TrainConnectionMenu.set_console_output(msg_invalid_route)
