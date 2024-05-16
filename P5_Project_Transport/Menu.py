@@ -40,7 +40,7 @@ class TrainConnectionMenu:
             msg_visit_country_website = f"Visit {website} for more information."
             TrainConnectionMenu.set_console_output(msg_visit_country_website)
         except IndexError:
-            msg_index_error = f"Error: No website found for country '{self.destination_country}'."
+            msg_index_error = f"Error: No website found for further train informations to '{self.destination_country}'."
             TrainConnectionMenu.set_console_output(msg_index_error)
         except Exception as e:
             msg_exception = f"An unexpected error occurred: {e}"
