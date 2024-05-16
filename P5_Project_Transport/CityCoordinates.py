@@ -10,7 +10,7 @@ def get_coordinates(city_name, country_name):
 
     Returns:
         tuple: A tuple containing the latitude and longitude coordinates of the city as floats.
-               If the city is not found or an error occurs, returns None.
+               If the city is not found or an exception is raised.
     """
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                              '(KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
@@ -22,9 +22,11 @@ def get_coordinates(city_name, country_name):
             latitude = float(data[0]['lat'])
             longitude = float(data[0]['lon'])
             return latitude, longitude
-    return None
+    raise ValueError(f"No coordinates found for {city_name} {country_name},"
+                     f"\nTry again with a different name or try in english or local language")
+
 
 if __name__ == "__main__":
-    country = "Italy"
-    city = "Torino Lingotto"
+    country = "Netherland"
+    city = "Amsterdam Centraal"
     print(get_coordinates(city, country))
